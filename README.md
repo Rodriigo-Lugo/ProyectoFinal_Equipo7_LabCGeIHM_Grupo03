@@ -1,5 +1,3 @@
-# ProyectoFinal_Equipo7_LabCGeIHM_Grupo03
-
 <p align="center">
   <span style="font-size:22px; font-weight:bold;">
     UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO  
@@ -19,7 +17,7 @@
 ---
 
 <p align="center"><b>REPOSITORIO - CONTROL DE VERSIONES</b></p>  
-# Proyecto Final Equipo7
 
+<p align="center"><b>Proyecto Final Equipo 7 Grupo 03</b></p>  
 <p align="center">
-  <b>NOMBRE COMPLETO:</b> Lugo Manzano Rodrigo <br>
+  <b>INTEGRANTES:</b> Lugo Manzano Rodrigo <br>
