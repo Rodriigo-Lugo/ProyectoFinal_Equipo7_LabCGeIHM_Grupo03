@@ -20,4 +20,6 @@
 
 <p align="center"><b>Proyecto Final Equipo 7 Grupo 03</b></p>  
 <p align="center">
-  <b>INTEGRANTES:</b> Lugo Manzano Rodrigo <br>
+  <b>INTEGRANTES:</b><br>
+  <b></b> García Cortés Adolfo de Jesús <br>
+  <b></b> Lugo Manzano Rodrigo <br>
