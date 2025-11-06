@@ -618,7 +618,6 @@ int main()
 		shaderList[0].SetPointLights(pointLights, pointLightCount);
 		shaderList[0].SetSpotLights(spotLights, spotLightCount);
 
-
 		model=glm::mat4(1.0);
 		modelaux= glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
