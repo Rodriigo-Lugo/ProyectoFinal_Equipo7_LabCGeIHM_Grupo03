@@ -71,9 +71,14 @@ Texture AgaveTexture;
 Texture FlechaTexture;
 
 
+//ModelsSnorlax
+Model CuerpoSnorlax_M;
+Model PiernaDerecha_M;
+Model PiernaIzquierda_M;
+Model BrazoIzquierdo_M;
+Model BrazoDerecho_M;
 
-Model Kitt_M;
-Model Llanta_M;
+
 Model Blackhawk_M;
 
 Skybox skybox;
@@ -274,8 +279,31 @@ float posXavion = 2.0, posYavion = 5.0, posZavion = -3.0;
 float	movAvion_x = 0.0f, movAvion_y = 0.0f;
 float giroAvion = 0;
 
+//Snorlax
+// Key Frames Snorlax
+float movCuerpoSnorlax_x = 0.0f;
+float movCuerpoSnorlax_z = 0.0f;
+float giroSnorlax = 0.0f;
+
+// Brazos Snorlax
+float giroBrazoIzquierdo_x = 0.0f;
+float giroBrazoIzquierdo_z = 0.0f;
+
+float giroBrazoDerecho_x = 0.0f;
+float giroBrazoDerecho_z = 0.0f;
+
+// Piernas Snorlax
+float giroPiernaIzquierda_x = 0.0f;
+float giroPiernaIzquierda_z = 0.0f;
+
+float giroPiernaDerecha_x = 0.0f;
+float giroPiernaDerecha_z = 0.0f;
+
+
+
+
 #define MAX_FRAMES 100 //Número de cuadros máximos
-int i_max_steps = 3000; //Número de pasos entre cuadros para interpolación, a mayor número , más lento será el movimiento
+int i_max_steps = 10000; //Número de pasos entre cuadros para interpolación, a mayor número , más lento será el movimiento
 int i_curr_steps = 0;
 typedef struct _frame
 {
@@ -286,6 +314,47 @@ typedef struct _frame
 	float movAvion_yInc;		//Variable para IncrementoY
 	float giroAvion;		//Variable para GiroAvion
 	float giroAvionInc;		//Variable para IncrementoGiroAvion
+
+
+	// Incrementos del cuerpo Snorlax
+	float movCuerpoSnorlax_xInc;
+	float movCuerpoSnorlax_zInc;
+	float giroSnorlaxInc;
+
+	// Brazos Snorlax
+	float giroBrazoIzquierdo_xInc;
+	float giroBrazoIzquierdo_zInc;
+
+	float giroBrazoDerecho_xInc;
+	float giroBrazoDerecho_zInc;
+
+	// Piernas Snorlax
+	float giroPiernaIzquierda_xInc;
+	float giroPiernaIzquierda_zInc;
+
+	float giroPiernaDerecha_xInc;
+	float giroPiernaDerecha_zInc;
+
+	//------------------------------------------------------------------------
+	//Key Frames Snorlax
+	float movCuerpoSnorlax_x;
+	float movCuerpoSnorlax_z;
+	float giroSnorlax;
+
+	//Brazos Snorlax
+	float giroBrazoIzquierdo_x;
+	float giroBrazoIzquierdo_z;
+
+	float giroBrazoDerecho_x;
+	float giroBrazoDerecho_z;
+
+	// Piernas Snorlax
+	float giroPiernaIzquierda_x;
+	float giroPiernaIzquierda_z;
+
+	float giroPiernaDerecha_x;
+	float giroPiernaDerecha_z;
+
 }FRAME;
 
 FRAME KeyFrame[MAX_FRAMES];
@@ -293,18 +362,39 @@ int FrameIndex = 6;			//El número de cuadros guardados actualmente desde 0 para
 bool play = false;
 int playIndex = 0;
 
-void saveFrame(void) //tecla L
+void saveFrame(void) // tecla L
 {
+	printf("FrameIndex %d\n", FrameIndex);
 
-	printf("frameindex %d\n", FrameIndex);
-
-
+	// --- Avión (si aún lo usas) ---
 	KeyFrame[FrameIndex].movAvion_x = movAvion_x;
 	KeyFrame[FrameIndex].movAvion_y = movAvion_y;
 	KeyFrame[FrameIndex].giroAvion = giroAvion;
-	//Se agregan nuevas líneas para guardar más variables si es necesario
-	
-	//no volatil,se requiere agregar una forma de escribir a un archivo para guardar los frames
+
+	// --- Snorlax ---
+
+	// Cuerpo
+	KeyFrame[FrameIndex].movCuerpoSnorlax_x = movCuerpoSnorlax_x;
+	KeyFrame[FrameIndex].movCuerpoSnorlax_z = movCuerpoSnorlax_z;
+	KeyFrame[FrameIndex].giroSnorlax = giroSnorlax;
+
+	// Brazo Izquierdo
+	KeyFrame[FrameIndex].giroBrazoIzquierdo_x = giroBrazoIzquierdo_x;
+	KeyFrame[FrameIndex].giroBrazoIzquierdo_z = giroBrazoIzquierdo_z;
+
+	// Brazo Derecho
+	KeyFrame[FrameIndex].giroBrazoDerecho_x = giroBrazoDerecho_x;
+	KeyFrame[FrameIndex].giroBrazoDerecho_z = giroBrazoDerecho_z;
+
+	// Pierna Izquierda
+	KeyFrame[FrameIndex].giroPiernaIzquierda_x = giroPiernaIzquierda_x;
+	KeyFrame[FrameIndex].giroPiernaIzquierda_z = giroPiernaIzquierda_z;
+
+	// Pierna Derecha
+	KeyFrame[FrameIndex].giroPiernaDerecha_x = giroPiernaDerecha_x;
+	KeyFrame[FrameIndex].giroPiernaDerecha_z = giroPiernaDerecha_z;
+
+	// Avanza al siguiente frame
 	FrameIndex++;
 }
 
@@ -318,19 +408,53 @@ void resetElements(void) //Tecla 0
 
 void interpolation(void)
 {
-	KeyFrame[playIndex].movAvion_xInc = (KeyFrame[playIndex + 1].movAvion_x - KeyFrame[playIndex].movAvion_x) / i_max_steps;
-	KeyFrame[playIndex].movAvion_yInc = (KeyFrame[playIndex + 1].movAvion_y - KeyFrame[playIndex].movAvion_y) / i_max_steps;
-	KeyFrame[playIndex].giroAvionInc = (KeyFrame[playIndex + 1].giroAvion - KeyFrame[playIndex].giroAvion) / i_max_steps;
+	// --- Avión ---
+	KeyFrame[playIndex].movAvion_xInc =
+		(KeyFrame[playIndex + 1].movAvion_x - KeyFrame[playIndex].movAvion_x) / i_max_steps;
+	KeyFrame[playIndex].movAvion_yInc =
+		(KeyFrame[playIndex + 1].movAvion_y - KeyFrame[playIndex].movAvion_y) / i_max_steps;
+	KeyFrame[playIndex].giroAvionInc =
+		(KeyFrame[playIndex + 1].giroAvion - KeyFrame[playIndex].giroAvion) / i_max_steps;
 
+	// --- Cuerpo Snorlax ---
+	KeyFrame[playIndex].movCuerpoSnorlax_xInc =
+		(KeyFrame[playIndex + 1].movCuerpoSnorlax_x - KeyFrame[playIndex].movCuerpoSnorlax_x) / i_max_steps;
+	KeyFrame[playIndex].movCuerpoSnorlax_zInc =
+		(KeyFrame[playIndex + 1].movCuerpoSnorlax_z - KeyFrame[playIndex].movCuerpoSnorlax_z) / i_max_steps;
+	KeyFrame[playIndex].giroSnorlaxInc =
+		(KeyFrame[playIndex + 1].giroSnorlax - KeyFrame[playIndex].giroSnorlax) / i_max_steps;
+
+	// --- Brazo Izquierdo ---
+	KeyFrame[playIndex].giroBrazoIzquierdo_xInc =
+		(KeyFrame[playIndex + 1].giroBrazoIzquierdo_x - KeyFrame[playIndex].giroBrazoIzquierdo_x) / i_max_steps;
+	KeyFrame[playIndex].giroBrazoIzquierdo_zInc =
+		(KeyFrame[playIndex + 1].giroBrazoIzquierdo_z - KeyFrame[playIndex].giroBrazoIzquierdo_z) / i_max_steps;
+
+	// --- Brazo Derecho ---
+	KeyFrame[playIndex].giroBrazoDerecho_xInc =
+		(KeyFrame[playIndex + 1].giroBrazoDerecho_x - KeyFrame[playIndex].giroBrazoDerecho_x) / i_max_steps;
+	KeyFrame[playIndex].giroBrazoDerecho_zInc =
+		(KeyFrame[playIndex + 1].giroBrazoDerecho_z - KeyFrame[playIndex].giroBrazoDerecho_z) / i_max_steps;
+
+	// --- Pierna Izquierda ---
+	KeyFrame[playIndex].giroPiernaIzquierda_xInc =
+		(KeyFrame[playIndex + 1].giroPiernaIzquierda_x - KeyFrame[playIndex].giroPiernaIzquierda_x) / i_max_steps;
+	KeyFrame[playIndex].giroPiernaIzquierda_zInc =
+		(KeyFrame[playIndex + 1].giroPiernaIzquierda_z - KeyFrame[playIndex].giroPiernaIzquierda_z) / i_max_steps;
+
+	// --- Pierna Derecha ---
+	KeyFrame[playIndex].giroPiernaDerecha_xInc =
+		(KeyFrame[playIndex + 1].giroPiernaDerecha_x - KeyFrame[playIndex].giroPiernaDerecha_x) / i_max_steps;
+	KeyFrame[playIndex].giroPiernaDerecha_zInc =
+		(KeyFrame[playIndex + 1].giroPiernaDerecha_z - KeyFrame[playIndex].giroPiernaDerecha_z) / i_max_steps;
 }
 
 
-
 // ----------------------------------------------------
-// Función para guardar todos los keyframes a un archivo
+// Función para guardar todos los keyframes de Snorlax a un archivo
 // ----------------------------------------------------
 void GuardarKeyframesEnArchivo(FRAME KeyFrame[], int FrameIndex, const std::string& nombreArchivo) {
-	std::ofstream archivo(nombreArchivo, std::ios::app); // modo append (no sobrescribe)
+	std::ofstream archivo(nombreArchivo, std::ios::app); // modo append
 
 	if (!archivo.is_open()) {
 		std::cerr << "Error al abrir el archivo para guardar los keyframes.\n";
@@ -340,9 +464,28 @@ void GuardarKeyframesEnArchivo(FRAME KeyFrame[], int FrameIndex, const std::stri
 	archivo << "---- NUEVA SESIÓN DE GUARDADO ----\n";
 	for (int i = 0; i < FrameIndex; ++i) {
 		archivo << "Keyframe " << i << ":\n";
-		archivo << "movAvion_x: " << KeyFrame[i].movAvion_x << "\n";
-		archivo << "movAvion_y: " << KeyFrame[i].movAvion_y << "\n";
-		archivo << "giroAvion: " << KeyFrame[i].giroAvion << "\n";
+
+		// ------------------ Cuerpo Snorlax ------------------
+		archivo << "movCuerpoSnorlax_x: " << KeyFrame[i].movCuerpoSnorlax_x << "\n";
+		archivo << "movCuerpoSnorlax_z: " << KeyFrame[i].movCuerpoSnorlax_z << "\n";
+		archivo << "giroSnorlax: " << KeyFrame[i].giroSnorlax << "\n";
+
+		// ------------------ Brazo Izquierdo ------------------
+		archivo << "giroBrazoIzquierdo_x: " << KeyFrame[i].giroBrazoIzquierdo_x << "\n";
+		archivo << "giroBrazoIzquierdo_z: " << KeyFrame[i].giroBrazoIzquierdo_z << "\n";
+
+		// ------------------ Brazo Derecho ------------------
+		archivo << "giroBrazoDerecho_x: " << KeyFrame[i].giroBrazoDerecho_x << "\n";
+		archivo << "giroBrazoDerecho_z: " << KeyFrame[i].giroBrazoDerecho_z << "\n";
+
+		// ------------------ Pierna Izquierda ------------------
+		archivo << "giroPiernaIzquierda_x: " << KeyFrame[i].giroPiernaIzquierda_x << "\n";
+		archivo << "giroPiernaIzquierda_z: " << KeyFrame[i].giroPiernaIzquierda_z << "\n";
+
+		// ------------------ Pierna Derecha ------------------
+		archivo << "giroPiernaDerecha_x: " << KeyFrame[i].giroPiernaDerecha_x << "\n";
+		archivo << "giroPiernaDerecha_z: " << KeyFrame[i].giroPiernaDerecha_z << "\n";
+
 		archivo << "----------------------------\n";
 	}
 
@@ -351,8 +494,10 @@ void GuardarKeyframesEnArchivo(FRAME KeyFrame[], int FrameIndex, const std::stri
 }
 
 
-// Función para cargar keyframes desde un archivo
 
+// ----------------------------------------------------
+// Función para cargar keyframes de Snorlax desde un archivo
+// ----------------------------------------------------
 void CargarKeyframesDesdeArchivo(FRAME KeyFrame[], int& FrameIndex, const std::string& nombreArchivo) {
 	std::ifstream archivo(nombreArchivo);
 
@@ -365,64 +510,90 @@ void CargarKeyframesDesdeArchivo(FRAME KeyFrame[], int& FrameIndex, const std::s
 	int index = 0;
 
 	while (std::getline(archivo, linea)) {
-		if (linea.find("movAvion_x:") != std::string::npos) {
-			std::stringstream ss(linea.substr(linea.find(":") + 1));
-			ss >> KeyFrame[index].movAvion_x;
-		}
-		else if (linea.find("movAvion_y:") != std::string::npos) {
-			std::stringstream ss(linea.substr(linea.find(":") + 1));
-			ss >> KeyFrame[index].movAvion_y;
-		}
-		else if (linea.find("giroAvion:") != std::string::npos) {
-			std::stringstream ss(linea.substr(linea.find(":") + 1));
-			ss >> KeyFrame[index].giroAvion;
-		}
+		std::stringstream ss(linea.substr(linea.find(":") + 1));
+
+		// ------------------ Cuerpo Snorlax ------------------
+		if (linea.find("movCuerpoSnorlax_x:") != std::string::npos) ss >> KeyFrame[index].movCuerpoSnorlax_x;
+		else if (linea.find("movCuerpoSnorlax_z:") != std::string::npos) ss >> KeyFrame[index].movCuerpoSnorlax_z;
+		else if (linea.find("giroSnorlax:") != std::string::npos) ss >> KeyFrame[index].giroSnorlax;
+
+		// ------------------ Brazo Izquierdo ------------------
+		else if (linea.find("giroBrazoIzquierdo_x:") != std::string::npos) ss >> KeyFrame[index].giroBrazoIzquierdo_x;
+		else if (linea.find("giroBrazoIzquierdo_z:") != std::string::npos) ss >> KeyFrame[index].giroBrazoIzquierdo_z;
+
+		// ------------------ Brazo Derecho ------------------
+		else if (linea.find("giroBrazoDerecho_x:") != std::string::npos) ss >> KeyFrame[index].giroBrazoDerecho_x;
+		else if (linea.find("giroBrazoDerecho_z:") != std::string::npos) ss >> KeyFrame[index].giroBrazoDerecho_z;
+
+		// ------------------ Pierna Izquierda ------------------
+		else if (linea.find("giroPiernaIzquierda_x:") != std::string::npos) ss >> KeyFrame[index].giroPiernaIzquierda_x;
+		else if (linea.find("giroPiernaIzquierda_z:") != std::string::npos) ss >> KeyFrame[index].giroPiernaIzquierda_z;
+
+		// ------------------ Pierna Derecha ------------------
+		else if (linea.find("giroPiernaDerecha_x:") != std::string::npos) ss >> KeyFrame[index].giroPiernaDerecha_x;
+		else if (linea.find("giroPiernaDerecha_z:") != std::string::npos) ss >> KeyFrame[index].giroPiernaDerecha_z;
+
 		else if (linea.find("----------------------------") != std::string::npos) {
 			index++;
-			if (index >= MAX_FRAMES) break; // evitar desbordamiento
+			if (index >= MAX_FRAMES) break; // Evita desbordamiento
 		}
 	}
 
-	FrameIndex = index; // actualiza cuántos frames se cargaron
+	FrameIndex = index;
 	archivo.close();
 
 	std::cout << "Se cargaron " << FrameIndex << " keyframes desde " << nombreArchivo << "\n";
 }
 
-
 void animate(void)
 {
-	//Movimiento del objeto con barra espaciadora
+	// Movimiento del Snorlax con barra espaciadora
 	if (play)
 	{
-		if (i_curr_steps >= i_max_steps) //fin de animación entre frames?
+		if (i_curr_steps >= i_max_steps) // ¿Fin de la animación entre frames?
 		{
 			playIndex++;
 			printf("playindex : %d\n", playIndex);
-			if (playIndex > FrameIndex - 2)	//Fin de toda la animación con último frame?
+			if (playIndex > FrameIndex - 2) // ¿Fin de toda la animación con el último frame?
 			{
 				printf("Frame index= %d\n", FrameIndex);
-				printf("termino la animacion\n");
+				printf("Terminó la animación\n");
 				playIndex = 0;
 				play = false;
 			}
-			else //Interpolación del próximo cuadro
+			else // Interpolación del próximo cuadro
 			{
-				
-				i_curr_steps = 0; //Resetea contador
-				//Interpolar
-				interpolation();
+				i_curr_steps = 0; // Resetea contador
+				interpolation();  // Interpolar valores del siguiente frame
 			}
 		}
 		else
 		{
-			//Dibujar Animación
-			movAvion_x += KeyFrame[playIndex].movAvion_xInc ;
-			movAvion_y += KeyFrame[playIndex].movAvion_yInc ;
-			giroAvion += KeyFrame[playIndex].giroAvionInc;
+			// -----------------------------
+			// Dibujar Animación de Snorlax
+			// -----------------------------
+			movCuerpoSnorlax_x += KeyFrame[playIndex].movCuerpoSnorlax_xInc;
+			movCuerpoSnorlax_z += KeyFrame[playIndex].movCuerpoSnorlax_zInc;
+			giroSnorlax += KeyFrame[playIndex].giroSnorlaxInc;
+
+			// Brazo Izquierdo
+			giroBrazoIzquierdo_x += KeyFrame[playIndex].giroBrazoIzquierdo_xInc;
+			giroBrazoIzquierdo_z += KeyFrame[playIndex].giroBrazoIzquierdo_zInc;
+
+			// Brazo Derecho
+			giroBrazoDerecho_x += KeyFrame[playIndex].giroBrazoDerecho_xInc;
+			giroBrazoDerecho_z += KeyFrame[playIndex].giroBrazoDerecho_zInc;
+
+			// Pierna Izquierda
+			giroPiernaIzquierda_x += KeyFrame[playIndex].giroPiernaIzquierda_xInc;
+			giroPiernaIzquierda_z += KeyFrame[playIndex].giroPiernaIzquierda_zInc;
+
+			// Pierna Derecha
+			giroPiernaDerecha_x += KeyFrame[playIndex].giroPiernaDerecha_xInc;
+			giroPiernaDerecha_z += KeyFrame[playIndex].giroPiernaDerecha_zInc;
+
 			i_curr_steps++;
 		}
-
 	}
 }
 
@@ -445,11 +616,18 @@ int main()
 	pisoTexture = Texture("Textures/piso.tga");
 	pisoTexture.LoadTextureA();
 
+	//Modelos snorlax
+	CuerpoSnorlax_M = Model();
+	CuerpoSnorlax_M.LoadModel("Models/cabezasnorlax.fbx");
+	PiernaDerecha_M = Model();
+	PiernaDerecha_M.LoadModel("Models/piederechosnorlax.fbx");
+	PiernaIzquierda_M = Model();
+	PiernaIzquierda_M.LoadModel("Models/pieizquierdosnorlax.fbx");
+	BrazoIzquierdo_M = Model();	
+	BrazoIzquierdo_M.LoadModel("Models/brazoizquierdosnorlax.fbx");
+	BrazoDerecho_M = Model();
+	BrazoDerecho_M.LoadModel("Models/brazoderechosnorlax.fbx");
 
-	Kitt_M = Model();
-	Kitt_M.LoadModel("Models/kitt_optimizado.obj");
-	Llanta_M = Model();
-	Llanta_M.LoadModel("Models/llanta_optimizada.obj");
 	Blackhawk_M = Model();
 	Blackhawk_M.LoadModel("Models/uh60.obj");
 
@@ -517,32 +695,99 @@ int main()
 	
 	//---------PARA TENER KEYFRAMES GUARDADOS NO VOLATILES QUE SIEMPRE SE UTILIZARAN SE DECLARAN AQUÍ
 
-	KeyFrame[0].movAvion_x = 0.0f;
-	KeyFrame[0].movAvion_y = 1.0f;
-	KeyFrame[0].giroAvion = 0;
+	// ---------------- KEYFRAMES SNORLAX CAMINANDO Y GIRANDO ----------------
 
+// --- Frame 0: posición inicial, mirando hacia -x ---
+	KeyFrame[0].movCuerpoSnorlax_x = 0.0f;
+	KeyFrame[0].movCuerpoSnorlax_z = 0.0f;
+	KeyFrame[0].giroSnorlax = 0.0f;
+	KeyFrame[0].giroBrazoIzquierdo_x = 0.0f;
+	KeyFrame[0].giroBrazoIzquierdo_z = 15.0f;
+	KeyFrame[0].giroBrazoDerecho_x = 0.0f;
+	KeyFrame[0].giroBrazoDerecho_z = -15.0f;
+	KeyFrame[0].giroPiernaIzquierda_x = 0.0f;
+	KeyFrame[0].giroPiernaIzquierda_z = -10.0f;
+	KeyFrame[0].giroPiernaDerecha_x = 0.0f;
+	KeyFrame[0].giroPiernaDerecha_z = 10.0f;
 
-	KeyFrame[1].movAvion_x = -2.0f;
-	KeyFrame[1].movAvion_y = 4.0f;
-	KeyFrame[1].giroAvion = 0;
+	// --- Frame 1: da un paso hacia +x ---
+	KeyFrame[1].movCuerpoSnorlax_x = 2.0f;
+	KeyFrame[1].movCuerpoSnorlax_z = 0.0f;
+	KeyFrame[1].giroSnorlax = 0.0f;
+	KeyFrame[1].giroBrazoIzquierdo_x = 0.0f;
+	KeyFrame[1].giroBrazoIzquierdo_z = -15.0f;
+	KeyFrame[1].giroBrazoDerecho_x = 0.0f;
+	KeyFrame[1].giroBrazoDerecho_z = 15.0f;
+	KeyFrame[1].giroPiernaIzquierda_x = 0.0f;
+	KeyFrame[1].giroPiernaIzquierda_z = 10.0f;
+	KeyFrame[1].giroPiernaDerecha_x = 0.0f;
+	KeyFrame[1].giroPiernaDerecha_z = -10.0f;
 
+	// --- Frame 2: llega al final del paso hacia +x y empieza a girar hacia -z ---
+	KeyFrame[2].movCuerpoSnorlax_x = 4.0f;
+	KeyFrame[2].movCuerpoSnorlax_z = 0.0f;
+	KeyFrame[2].giroSnorlax = 45.0f; // empieza el giro
+	KeyFrame[2].giroBrazoIzquierdo_x = 0.0f;
+	KeyFrame[2].giroBrazoIzquierdo_z = 10.0f;
+	KeyFrame[2].giroBrazoDerecho_x = 0.0f;
+	KeyFrame[2].giroBrazoDerecho_z = -10.0f;
+	KeyFrame[2].giroPiernaIzquierda_x = 0.0f;
+	KeyFrame[2].giroPiernaIzquierda_z = -8.0f;
+	KeyFrame[2].giroPiernaDerecha_x = 0.0f;
+	KeyFrame[2].giroPiernaDerecha_z = 8.0f;
 
-	KeyFrame[2].movAvion_x = -4.0f;
-	KeyFrame[2].movAvion_y = 0.0f;
-	KeyFrame[2].giroAvion = 0;
+	// --- Frame 3: termina el giro, ahora mirando hacia -z ---
+	KeyFrame[3].movCuerpoSnorlax_x = 4.0f;
+	KeyFrame[3].movCuerpoSnorlax_z = -0.5f;
+	KeyFrame[3].giroSnorlax = 90.0f; // ahora mira hacia -z
+	KeyFrame[3].giroBrazoIzquierdo_x = 15.0f;
+	KeyFrame[3].giroBrazoIzquierdo_z = 0.0f;
+	KeyFrame[3].giroBrazoDerecho_x = -15.0f;
+	KeyFrame[3].giroBrazoDerecho_z = 0.0f;
+	KeyFrame[3].giroPiernaIzquierda_x = -10.0f;
+	KeyFrame[3].giroPiernaIzquierda_z = 0.0f;
+	KeyFrame[3].giroPiernaDerecha_x = 10.0f;
+	KeyFrame[3].giroPiernaDerecha_z = 0.0f;
 
+	// --- Frame 4: camina hacia -z ---
+	KeyFrame[4].movCuerpoSnorlax_x = 4.0f;
+	KeyFrame[4].movCuerpoSnorlax_z = -3.5f;
+	KeyFrame[4].giroSnorlax = 90.0f;
+	KeyFrame[4].giroBrazoIzquierdo_x = -15.0f;
+	KeyFrame[4].giroBrazoIzquierdo_z = 0.0f;
+	KeyFrame[4].giroBrazoDerecho_x = 15.0f;
+	KeyFrame[4].giroBrazoDerecho_z = 0.0f;
+	KeyFrame[4].giroPiernaIzquierda_x = 10.0f;
+	KeyFrame[4].giroPiernaIzquierda_z = 0.0f;
+	KeyFrame[4].giroPiernaDerecha_x = -10.0f;
+	KeyFrame[4].giroPiernaDerecha_z = 0.0f;
 
-	KeyFrame[3].movAvion_x = -6.0f;
-	KeyFrame[3].movAvion_y = -4.0f;
-	KeyFrame[3].giroAvion = 0;
+	// --- Frame 5: sigue avanzando hacia -z ---
+	KeyFrame[5].movCuerpoSnorlax_x = 4.0f;
+	KeyFrame[5].movCuerpoSnorlax_z = -7.0f;
+	KeyFrame[5].giroSnorlax = 90.0f;
+	KeyFrame[5].giroBrazoIzquierdo_x = 15.0f;
+	KeyFrame[5].giroBrazoIzquierdo_z = 0.0f;
+	KeyFrame[5].giroBrazoDerecho_x = -15.0f;
+	KeyFrame[5].giroBrazoDerecho_z = 0.0f;
+	KeyFrame[5].giroPiernaIzquierda_x = -10.0f;
+	KeyFrame[5].giroPiernaIzquierda_z = 0.0f;
+	KeyFrame[5].giroPiernaDerecha_x = 10.0f;
+	KeyFrame[5].giroPiernaDerecha_z = 0.0f;
 
-	KeyFrame[4].movAvion_x = -8.0f;
-	KeyFrame[4].movAvion_y = 0.0f;
-	KeyFrame[4].giroAvion = 0.0f;
+	// --- Frame 6: último paso hacia -z ---
+	KeyFrame[6].movCuerpoSnorlax_x = 4.0f;
+	KeyFrame[6].movCuerpoSnorlax_z = -10.0f;
+	KeyFrame[6].giroSnorlax = 90.0f;
+	KeyFrame[6].giroBrazoIzquierdo_x = -15.0f;
+	KeyFrame[6].giroBrazoIzquierdo_z = 0.0f;
+	KeyFrame[6].giroBrazoDerecho_x = 15.0f;
+	KeyFrame[6].giroBrazoDerecho_z = 0.0f;
+	KeyFrame[6].giroPiernaIzquierda_x = 10.0f;
+	KeyFrame[6].giroPiernaIzquierda_z = 0.0f;
+	KeyFrame[6].giroPiernaDerecha_x = -10.0f;
+	KeyFrame[6].giroPiernaDerecha_z = 0.0f;
 
-	KeyFrame[5].movAvion_x = -10.0f;
-	KeyFrame[5].movAvion_y = 4.0f;
-	KeyFrame[5].giroAvion = 0.0f;
 	
 
 	//Se agregan nuevos frames 
@@ -633,56 +878,71 @@ int main()
 		glUniform2fv(uniformTextureOffset, 1, glm::value_ptr(toffset));
 		pisoTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-
 		meshList[2]->RenderMesh();
+		  
+		// ----- SNORLAX ---------
 
-
-		//Instancia del coche 
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(movCoche-50.0f, 0.5f, -2.0f));
+		// Cuerpo Snorlax
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f + movCuerpoSnorlax_x, 1.32f , -2.0f + movCuerpoSnorlax_z));
 		modelaux = model;
+		model = glm::rotate(model, giroSnorlax * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); // Giro del cuerpo
 		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
-		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Kitt_M.RenderModel();
+		CuerpoSnorlax_M.RenderModel();
 
-		//Llanta delantera izquierda
-		model = modelaux;
-		model = glm::translate(model, glm::vec3(7.0f, -0.5f, 8.0f));
-		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, rotllanta * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
-		color = glm::vec3(0.5f, 0.5f, 0.5f);//llanta con color gris
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Llanta_M.RenderModel();
 
-		//Llanta trasera izquierda
+		// Pierna derecha
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(15.5f, -0.5f, 8.0f));
-		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, rotllanta * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.2f, -1.1f, -0.5f));
+		model = glm::rotate(model, giroPiernaDerecha_x * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); // Giro eje X
+		model = glm::rotate(model, giroPiernaDerecha_z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // Giro eje Z
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Llanta_M.RenderModel();
+		PiernaDerecha_M.RenderModel();
 
-		//Llanta delantera derecha
+
+		// Pierna izquierda
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(7.0f, -0.5f, 1.5f));
-		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, -rotllanta * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.2f, -1.1f, 0.5f));
+		model = glm::rotate(model, giroPiernaIzquierda_x * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); // Giro eje X
+		model = glm::rotate(model, giroPiernaIzquierda_z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // Giro eje Z
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Llanta_M.RenderModel();
+		PiernaIzquierda_M.RenderModel();
 
-		//Llanta trasera derecha
+
+		// Brazo izquierdo
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(15.5f, -0.5f, 1.5f));
-		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, -rotllanta * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.6f, -0.7f));
+		model = glm::rotate(model, giroBrazoIzquierdo_x * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); // Giro eje X
+		model = glm::rotate(model, giroBrazoIzquierdo_z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // Giro eje Z
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Llanta_M.RenderModel();
+		BrazoIzquierdo_M.RenderModel();
+
+
+		// Brazo derecho
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 0.6f, 0.75f));
+		model = glm::rotate(model, giroBrazoDerecho_x * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); // Giro eje X
+		model = glm::rotate(model, giroBrazoDerecho_z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // Giro eje Z
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		BrazoDerecho_M.RenderModel();
+
+
+		//-----------------------------------------
+
 
 
 		model = glm::mat4(1.0);
