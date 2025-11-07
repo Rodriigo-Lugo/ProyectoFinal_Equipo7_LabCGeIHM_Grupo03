@@ -313,6 +313,7 @@ float movPiernaDerecha_z = 0.0f;    // Movimiento lineal en Z
 #define MAX_FRAMES 100 //Número de cuadros máximos
 int i_max_steps = 10000; //Número de pasos entre cuadros para interpolación, a mayor número , más lento será el movimiento
 int i_curr_steps = 0;
+
 typedef struct _frame
 {
 	//Variables para GUARDAR Key Frames
@@ -329,26 +330,7 @@ typedef struct _frame
 	float movCuerpoSnorlax_zInc;
 	float giroSnorlaxInc;
 
-	// Brazos Snorlax
-	float giroBrazoIzquierdo_xInc;
-	float giroBrazoIzquierdo_zInc;
-
-	float giroBrazoDerecho_xInc;
-	float giroBrazoDerecho_zInc;
-
-	// Piernas Snorlax
-	float giroPiernaIzquierda_xInc;
-	float giroPiernaIzquierda_zInc;
-
-	float giroPiernaDerecha_xInc;
-	float giroPiernaDerecha_zInc;
-
-	//------------------------------------------------------------------------
-	//Key Frames Snorlax
-	float movCuerpoSnorlax_x;
-	float movCuerpoSnorlax_z;
-	float giroSnorlax;
-
+	
 	// Brazos Snorlax
 	float giroBrazoIzquierdo_xInc;
 	float giroBrazoIzquierdo_zInc;
@@ -371,6 +353,35 @@ typedef struct _frame
 	float movPiernaDerecha_xInc;    // Movimiento lineal en X
 	float movPiernaDerecha_zInc;    // Movimiento lineal en Z
 
+
+	//------------------------------------------------------------------------
+	//Key Frames Snorlax
+	float movCuerpoSnorlax_x;
+	float movCuerpoSnorlax_z;
+	float giroSnorlax;
+
+
+	// Brazos Snorlax
+	float giroBrazoIzquierdo_x;
+	float giroBrazoIzquierdo_z;
+	float movBrazoIzquierdo_x;   // Movimiento lineal en X
+	float movBrazoIzquierdo_z;   // Movimiento lineal en Z
+
+	float giroBrazoDerecho_x;
+	float giroBrazoDerecho_z;
+	float movBrazoDerecho_x;     // Movimiento lineal en X
+	float movBrazoDerecho_z;     // Movimiento lineal en Z
+
+	// Piernas Snorlax
+	float giroPiernaIzquierda_x;
+	float giroPiernaIzquierda_z;
+	float movPiernaIzquierda_x;  // Movimiento lineal en X
+	float movPiernaIzquierda_z;  // Movimiento lineal en Z
+
+	float giroPiernaDerecha_x;
+	float giroPiernaDerecha_z;
+	float movPiernaDerecha_x;    // Movimiento lineal en X
+	float movPiernaDerecha_z;    // Movimiento lineal en Z
 
 }FRAME;
 
@@ -398,29 +409,70 @@ void saveFrame(void) // tecla L
 	// Brazo Izquierdo
 	KeyFrame[FrameIndex].giroBrazoIzquierdo_x = giroBrazoIzquierdo_x;
 	KeyFrame[FrameIndex].giroBrazoIzquierdo_z = giroBrazoIzquierdo_z;
+	KeyFrame[FrameIndex].movBrazoIzquierdo_x = movBrazoIzquierdo_x;
+	KeyFrame[FrameIndex].movBrazoIzquierdo_z = movBrazoIzquierdo_z;
 
 	// Brazo Derecho
 	KeyFrame[FrameIndex].giroBrazoDerecho_x = giroBrazoDerecho_x;
 	KeyFrame[FrameIndex].giroBrazoDerecho_z = giroBrazoDerecho_z;
+	KeyFrame[FrameIndex].movBrazoDerecho_x = movBrazoDerecho_x;
+	KeyFrame[FrameIndex].movBrazoDerecho_z = movBrazoDerecho_z;
 
 	// Pierna Izquierda
 	KeyFrame[FrameIndex].giroPiernaIzquierda_x = giroPiernaIzquierda_x;
 	KeyFrame[FrameIndex].giroPiernaIzquierda_z = giroPiernaIzquierda_z;
+	KeyFrame[FrameIndex].movPiernaIzquierda_x = movPiernaIzquierda_x;
+	KeyFrame[FrameIndex].movPiernaIzquierda_z = movPiernaIzquierda_z;
 
 	// Pierna Derecha
 	KeyFrame[FrameIndex].giroPiernaDerecha_x = giroPiernaDerecha_x;
 	KeyFrame[FrameIndex].giroPiernaDerecha_z = giroPiernaDerecha_z;
+	KeyFrame[FrameIndex].movPiernaDerecha_x = movPiernaDerecha_x;
+	KeyFrame[FrameIndex].movPiernaDerecha_z = movPiernaDerecha_z;
 
 	// Avanza al siguiente frame
 	FrameIndex++;
 }
 
-void resetElements(void) //Tecla 0
-{
 
+
+void resetElements(void) // Tecla 0
+{
+	// --- Avión (si aún lo usas) ---
 	movAvion_x = KeyFrame[0].movAvion_x;
 	movAvion_y = KeyFrame[0].movAvion_y;
 	giroAvion = KeyFrame[0].giroAvion;
+
+	// --- Snorlax ---
+
+	// Cuerpo
+	movCuerpoSnorlax_x = KeyFrame[0].movCuerpoSnorlax_x;
+	movCuerpoSnorlax_z = KeyFrame[0].movCuerpoSnorlax_z;
+	giroSnorlax = KeyFrame[0].giroSnorlax;
+
+	// Brazo Izquierdo
+	giroBrazoIzquierdo_x = KeyFrame[0].giroBrazoIzquierdo_x;
+	giroBrazoIzquierdo_z = KeyFrame[0].giroBrazoIzquierdo_z;
+	movBrazoIzquierdo_x = KeyFrame[0].movBrazoIzquierdo_x;
+	movBrazoIzquierdo_z = KeyFrame[0].movBrazoIzquierdo_z;
+
+	// Brazo Derecho
+	giroBrazoDerecho_x = KeyFrame[0].giroBrazoDerecho_x;
+	giroBrazoDerecho_z = KeyFrame[0].giroBrazoDerecho_z;
+	movBrazoDerecho_x = KeyFrame[0].movBrazoDerecho_x;
+	movBrazoDerecho_z = KeyFrame[0].movBrazoDerecho_z;
+
+	// Pierna Izquierda
+	giroPiernaIzquierda_x = KeyFrame[0].giroPiernaIzquierda_x;
+	giroPiernaIzquierda_z = KeyFrame[0].giroPiernaIzquierda_z;
+	movPiernaIzquierda_x = KeyFrame[0].movPiernaIzquierda_x;
+	movPiernaIzquierda_z = KeyFrame[0].movPiernaIzquierda_z;
+
+	// Pierna Derecha
+	giroPiernaDerecha_x = KeyFrame[0].giroPiernaDerecha_x;
+	giroPiernaDerecha_z = KeyFrame[0].giroPiernaDerecha_z;
+	movPiernaDerecha_x = KeyFrame[0].movPiernaDerecha_x;
+	movPiernaDerecha_z = KeyFrame[0].movPiernaDerecha_z;
 }
 
 void interpolation(void)
@@ -446,25 +498,42 @@ void interpolation(void)
 		(KeyFrame[playIndex + 1].giroBrazoIzquierdo_x - KeyFrame[playIndex].giroBrazoIzquierdo_x) / i_max_steps;
 	KeyFrame[playIndex].giroBrazoIzquierdo_zInc =
 		(KeyFrame[playIndex + 1].giroBrazoIzquierdo_z - KeyFrame[playIndex].giroBrazoIzquierdo_z) / i_max_steps;
+	KeyFrame[playIndex].movBrazoIzquierdo_xInc =
+		(KeyFrame[playIndex + 1].movBrazoIzquierdo_x - KeyFrame[playIndex].movBrazoIzquierdo_x) / i_max_steps;
+	KeyFrame[playIndex].movBrazoIzquierdo_zInc =
+		(KeyFrame[playIndex + 1].movBrazoIzquierdo_z - KeyFrame[playIndex].movBrazoIzquierdo_z) / i_max_steps;
 
 	// --- Brazo Derecho ---
 	KeyFrame[playIndex].giroBrazoDerecho_xInc =
 		(KeyFrame[playIndex + 1].giroBrazoDerecho_x - KeyFrame[playIndex].giroBrazoDerecho_x) / i_max_steps;
 	KeyFrame[playIndex].giroBrazoDerecho_zInc =
 		(KeyFrame[playIndex + 1].giroBrazoDerecho_z - KeyFrame[playIndex].giroBrazoDerecho_z) / i_max_steps;
+	KeyFrame[playIndex].movBrazoDerecho_xInc =
+		(KeyFrame[playIndex + 1].movBrazoDerecho_x - KeyFrame[playIndex].movBrazoDerecho_x) / i_max_steps;
+	KeyFrame[playIndex].movBrazoDerecho_zInc =
+		(KeyFrame[playIndex + 1].movBrazoDerecho_z - KeyFrame[playIndex].movBrazoDerecho_z) / i_max_steps;
 
 	// --- Pierna Izquierda ---
 	KeyFrame[playIndex].giroPiernaIzquierda_xInc =
 		(KeyFrame[playIndex + 1].giroPiernaIzquierda_x - KeyFrame[playIndex].giroPiernaIzquierda_x) / i_max_steps;
 	KeyFrame[playIndex].giroPiernaIzquierda_zInc =
 		(KeyFrame[playIndex + 1].giroPiernaIzquierda_z - KeyFrame[playIndex].giroPiernaIzquierda_z) / i_max_steps;
+	KeyFrame[playIndex].movPiernaIzquierda_xInc =
+		(KeyFrame[playIndex + 1].movPiernaIzquierda_x - KeyFrame[playIndex].movPiernaIzquierda_x) / i_max_steps;
+	KeyFrame[playIndex].movPiernaIzquierda_zInc =
+		(KeyFrame[playIndex + 1].movPiernaIzquierda_z - KeyFrame[playIndex].movPiernaIzquierda_z) / i_max_steps;
 
 	// --- Pierna Derecha ---
 	KeyFrame[playIndex].giroPiernaDerecha_xInc =
 		(KeyFrame[playIndex + 1].giroPiernaDerecha_x - KeyFrame[playIndex].giroPiernaDerecha_x) / i_max_steps;
 	KeyFrame[playIndex].giroPiernaDerecha_zInc =
 		(KeyFrame[playIndex + 1].giroPiernaDerecha_z - KeyFrame[playIndex].giroPiernaDerecha_z) / i_max_steps;
+	KeyFrame[playIndex].movPiernaDerecha_xInc =
+		(KeyFrame[playIndex + 1].movPiernaDerecha_x - KeyFrame[playIndex].movPiernaDerecha_x) / i_max_steps;
+	KeyFrame[playIndex].movPiernaDerecha_zInc =
+		(KeyFrame[playIndex + 1].movPiernaDerecha_z - KeyFrame[playIndex].movPiernaDerecha_z) / i_max_steps;
 }
+
 
 
 // ----------------------------------------------------
@@ -490,18 +559,26 @@ void GuardarKeyframesEnArchivo(FRAME KeyFrame[], int FrameIndex, const std::stri
 		// ------------------ Brazo Izquierdo ------------------
 		archivo << "giroBrazoIzquierdo_x: " << KeyFrame[i].giroBrazoIzquierdo_x << "\n";
 		archivo << "giroBrazoIzquierdo_z: " << KeyFrame[i].giroBrazoIzquierdo_z << "\n";
+		archivo << "movBrazoIzquierdo_x: " << KeyFrame[i].movBrazoIzquierdo_x << "\n";
+		archivo << "movBrazoIzquierdo_z: " << KeyFrame[i].movBrazoIzquierdo_z << "\n";
 
 		// ------------------ Brazo Derecho ------------------
 		archivo << "giroBrazoDerecho_x: " << KeyFrame[i].giroBrazoDerecho_x << "\n";
 		archivo << "giroBrazoDerecho_z: " << KeyFrame[i].giroBrazoDerecho_z << "\n";
+		archivo << "movBrazoDerecho_x: " << KeyFrame[i].movBrazoDerecho_x << "\n";
+		archivo << "movBrazoDerecho_z: " << KeyFrame[i].movBrazoDerecho_z << "\n";
 
 		// ------------------ Pierna Izquierda ------------------
 		archivo << "giroPiernaIzquierda_x: " << KeyFrame[i].giroPiernaIzquierda_x << "\n";
 		archivo << "giroPiernaIzquierda_z: " << KeyFrame[i].giroPiernaIzquierda_z << "\n";
+		archivo << "movPiernaIzquierda_x: " << KeyFrame[i].movPiernaIzquierda_x << "\n";
+		archivo << "movPiernaIzquierda_z: " << KeyFrame[i].movPiernaIzquierda_z << "\n";
 
 		// ------------------ Pierna Derecha ------------------
 		archivo << "giroPiernaDerecha_x: " << KeyFrame[i].giroPiernaDerecha_x << "\n";
 		archivo << "giroPiernaDerecha_z: " << KeyFrame[i].giroPiernaDerecha_z << "\n";
+		archivo << "movPiernaDerecha_x: " << KeyFrame[i].movPiernaDerecha_x << "\n";
+		archivo << "movPiernaDerecha_z: " << KeyFrame[i].movPiernaDerecha_z << "\n";
 
 		archivo << "----------------------------\n";
 	}
@@ -509,6 +586,7 @@ void GuardarKeyframesEnArchivo(FRAME KeyFrame[], int FrameIndex, const std::stri
 	archivo.close();
 	std::cout << "Se guardaron " << FrameIndex << " keyframes en " << nombreArchivo << "\n";
 }
+
 
 
 
@@ -537,19 +615,28 @@ void CargarKeyframesDesdeArchivo(FRAME KeyFrame[], int& FrameIndex, const std::s
 		// ------------------ Brazo Izquierdo ------------------
 		else if (linea.find("giroBrazoIzquierdo_x:") != std::string::npos) ss >> KeyFrame[index].giroBrazoIzquierdo_x;
 		else if (linea.find("giroBrazoIzquierdo_z:") != std::string::npos) ss >> KeyFrame[index].giroBrazoIzquierdo_z;
+		else if (linea.find("movBrazoIzquierdo_x:") != std::string::npos) ss >> KeyFrame[index].movBrazoIzquierdo_x;
+		else if (linea.find("movBrazoIzquierdo_z:") != std::string::npos) ss >> KeyFrame[index].movBrazoIzquierdo_z;
 
 		// ------------------ Brazo Derecho ------------------
 		else if (linea.find("giroBrazoDerecho_x:") != std::string::npos) ss >> KeyFrame[index].giroBrazoDerecho_x;
 		else if (linea.find("giroBrazoDerecho_z:") != std::string::npos) ss >> KeyFrame[index].giroBrazoDerecho_z;
+		else if (linea.find("movBrazoDerecho_x:") != std::string::npos) ss >> KeyFrame[index].movBrazoDerecho_x;
+		else if (linea.find("movBrazoDerecho_z:") != std::string::npos) ss >> KeyFrame[index].movBrazoDerecho_z;
 
 		// ------------------ Pierna Izquierda ------------------
 		else if (linea.find("giroPiernaIzquierda_x:") != std::string::npos) ss >> KeyFrame[index].giroPiernaIzquierda_x;
 		else if (linea.find("giroPiernaIzquierda_z:") != std::string::npos) ss >> KeyFrame[index].giroPiernaIzquierda_z;
+		else if (linea.find("movPiernaIzquierda_x:") != std::string::npos) ss >> KeyFrame[index].movPiernaIzquierda_x;
+		else if (linea.find("movPiernaIzquierda_z:") != std::string::npos) ss >> KeyFrame[index].movPiernaIzquierda_z;
 
 		// ------------------ Pierna Derecha ------------------
 		else if (linea.find("giroPiernaDerecha_x:") != std::string::npos) ss >> KeyFrame[index].giroPiernaDerecha_x;
 		else if (linea.find("giroPiernaDerecha_z:") != std::string::npos) ss >> KeyFrame[index].giroPiernaDerecha_z;
+		else if (linea.find("movPiernaDerecha_x:") != std::string::npos) ss >> KeyFrame[index].movPiernaDerecha_x;
+		else if (linea.find("movPiernaDerecha_z:") != std::string::npos) ss >> KeyFrame[index].movPiernaDerecha_z;
 
+		// ------------------ Fin de keyframe ------------------
 		else if (linea.find("----------------------------") != std::string::npos) {
 			index++;
 			if (index >= MAX_FRAMES) break; // Evita desbordamiento
@@ -562,6 +649,7 @@ void CargarKeyframesDesdeArchivo(FRAME KeyFrame[], int& FrameIndex, const std::s
 	std::cout << "Se cargaron " << FrameIndex << " keyframes desde " << nombreArchivo << "\n";
 }
 
+
 void animate(void)
 {
 	// Movimiento del Snorlax con barra espaciadora
@@ -571,6 +659,7 @@ void animate(void)
 		{
 			playIndex++;
 			printf("playindex : %d\n", playIndex);
+
 			if (playIndex > FrameIndex - 2) // ¿Fin de toda la animación con el último frame?
 			{
 				printf("Frame index= %d\n", FrameIndex);
@@ -589,30 +678,42 @@ void animate(void)
 			// -----------------------------
 			// Dibujar Animación de Snorlax
 			// -----------------------------
+
+			// --- Cuerpo ---
 			movCuerpoSnorlax_x += KeyFrame[playIndex].movCuerpoSnorlax_xInc;
 			movCuerpoSnorlax_z += KeyFrame[playIndex].movCuerpoSnorlax_zInc;
 			giroSnorlax += KeyFrame[playIndex].giroSnorlaxInc;
 
-			// Brazo Izquierdo
+			// --- Brazo Izquierdo ---
 			giroBrazoIzquierdo_x += KeyFrame[playIndex].giroBrazoIzquierdo_xInc;
 			giroBrazoIzquierdo_z += KeyFrame[playIndex].giroBrazoIzquierdo_zInc;
+			movBrazoIzquierdo_x += KeyFrame[playIndex].movBrazoIzquierdo_xInc;
+			movBrazoIzquierdo_z += KeyFrame[playIndex].movBrazoIzquierdo_zInc;
 
-			// Brazo Derecho
+			// --- Brazo Derecho ---
 			giroBrazoDerecho_x += KeyFrame[playIndex].giroBrazoDerecho_xInc;
 			giroBrazoDerecho_z += KeyFrame[playIndex].giroBrazoDerecho_zInc;
+			movBrazoDerecho_x += KeyFrame[playIndex].movBrazoDerecho_xInc;
+			movBrazoDerecho_z += KeyFrame[playIndex].movBrazoDerecho_zInc;
 
-			// Pierna Izquierda
+			// --- Pierna Izquierda ---
 			giroPiernaIzquierda_x += KeyFrame[playIndex].giroPiernaIzquierda_xInc;
 			giroPiernaIzquierda_z += KeyFrame[playIndex].giroPiernaIzquierda_zInc;
+			movPiernaIzquierda_x += KeyFrame[playIndex].movPiernaIzquierda_xInc;
+			movPiernaIzquierda_z += KeyFrame[playIndex].movPiernaIzquierda_zInc;
 
-			// Pierna Derecha
+			// --- Pierna Derecha ---
 			giroPiernaDerecha_x += KeyFrame[playIndex].giroPiernaDerecha_xInc;
 			giroPiernaDerecha_z += KeyFrame[playIndex].giroPiernaDerecha_zInc;
+			movPiernaDerecha_x += KeyFrame[playIndex].movPiernaDerecha_xInc;
+			movPiernaDerecha_z += KeyFrame[playIndex].movPiernaDerecha_zInc;
 
+			// Avanza paso a paso dentro de la interpolación actual
 			i_curr_steps++;
 		}
 	}
 }
+
 
 ///////////////* FIN KEYFRAMES*////////////////////////////
 
