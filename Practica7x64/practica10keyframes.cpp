@@ -284,20 +284,28 @@ float giroAvion = 0;
 float movCuerpoSnorlax_x = 0.0f;
 float movCuerpoSnorlax_z = 0.0f;
 float giroSnorlax = 0.0f;
-
 // Brazos Snorlax
 float giroBrazoIzquierdo_x = 0.0f;
 float giroBrazoIzquierdo_z = 0.0f;
+float movBrazoIzquierdo_x = 0.0f;   // Movimiento lineal en X
+float movBrazoIzquierdo_z = 0.0f;   // Movimiento lineal en Z
 
 float giroBrazoDerecho_x = 0.0f;
 float giroBrazoDerecho_z = 0.0f;
+float movBrazoDerecho_x = 0.0f;     // Movimiento lineal en X
+float movBrazoDerecho_z = 0.0f;     // Movimiento lineal en Z
 
 // Piernas Snorlax
 float giroPiernaIzquierda_x = 0.0f;
 float giroPiernaIzquierda_z = 0.0f;
+float movPiernaIzquierda_x = 0.0f;  // Movimiento lineal en X
+float movPiernaIzquierda_z = 0.0f;  // Movimiento lineal en Z
 
 float giroPiernaDerecha_x = 0.0f;
 float giroPiernaDerecha_z = 0.0f;
+float movPiernaDerecha_x = 0.0f;    // Movimiento lineal en X
+float movPiernaDerecha_z = 0.0f;    // Movimiento lineal en Z
+
 
 
 
@@ -341,19 +349,28 @@ typedef struct _frame
 	float movCuerpoSnorlax_z;
 	float giroSnorlax;
 
-	//Brazos Snorlax
-	float giroBrazoIzquierdo_x;
-	float giroBrazoIzquierdo_z;
+	// Brazos Snorlax
+	float giroBrazoIzquierdo_xInc;
+	float giroBrazoIzquierdo_zInc;
+	float movBrazoIzquierdo_xInc;   // Movimiento lineal en X
+	float movBrazoIzquierdo_zInc;   // Movimiento lineal en Z
 
-	float giroBrazoDerecho_x;
-	float giroBrazoDerecho_z;
+	float giroBrazoDerecho_xInc;
+	float giroBrazoDerecho_zInc;
+	float movBrazoDerecho_xInc;     // Movimiento lineal en X
+	float movBrazoDerecho_zInc;     // Movimiento lineal en Z
 
 	// Piernas Snorlax
-	float giroPiernaIzquierda_x;
-	float giroPiernaIzquierda_z;
+	float giroPiernaIzquierda_xInc;
+	float giroPiernaIzquierda_zInc;
+	float movPiernaIzquierda_xInc;  // Movimiento lineal en X
+	float movPiernaIzquierda_zInc;  // Movimiento lineal en Z
 
-	float giroPiernaDerecha_x;
-	float giroPiernaDerecha_z;
+	float giroPiernaDerecha_xInc;
+	float giroPiernaDerecha_zInc;
+	float movPiernaDerecha_xInc;    // Movimiento lineal en X
+	float movPiernaDerecha_zInc;    // Movimiento lineal en Z
+
 
 }FRAME;
 
@@ -728,13 +745,13 @@ int main()
 	KeyFrame[2].movCuerpoSnorlax_z = 0.0f;
 	KeyFrame[2].giroSnorlax = 45.0f; // empieza el giro
 	KeyFrame[2].giroBrazoIzquierdo_x = 0.0f;
-	KeyFrame[2].giroBrazoIzquierdo_z = 10.0f;
+	KeyFrame[2].giroBrazoIzquierdo_z = 0.0f;
 	KeyFrame[2].giroBrazoDerecho_x = 0.0f;
-	KeyFrame[2].giroBrazoDerecho_z = -10.0f;
+	KeyFrame[2].giroBrazoDerecho_z = -0.0f;
 	KeyFrame[2].giroPiernaIzquierda_x = 0.0f;
-	KeyFrame[2].giroPiernaIzquierda_z = -8.0f;
+	KeyFrame[2].giroPiernaIzquierda_z = 0.0f;
 	KeyFrame[2].giroPiernaDerecha_x = 0.0f;
-	KeyFrame[2].giroPiernaDerecha_z = 8.0f;
+	KeyFrame[2].giroPiernaDerecha_z = 0.0f;
 
 	// --- Frame 3: termina el giro, ahora mirando hacia -z ---
 	KeyFrame[3].movCuerpoSnorlax_x = 4.0f;
@@ -742,8 +759,8 @@ int main()
 	KeyFrame[3].giroSnorlax = 90.0f; // ahora mira hacia -z
 	KeyFrame[3].giroBrazoIzquierdo_x = 15.0f;
 	KeyFrame[3].giroBrazoIzquierdo_z = 0.0f;
-	KeyFrame[3].giroBrazoDerecho_x = -15.0f;
-	KeyFrame[3].giroBrazoDerecho_z = 0.0f;
+	KeyFrame[3].giroBrazoDerecho_x = 0.0f;
+	KeyFrame[3].giroBrazoDerecho_z = 45.0f;
 	KeyFrame[3].giroPiernaIzquierda_x = -10.0f;
 	KeyFrame[3].giroPiernaIzquierda_z = 0.0f;
 	KeyFrame[3].giroPiernaDerecha_x = 10.0f;
