@@ -47,6 +47,15 @@ int cicloCarga = 0;
 int banderaCarga = 0;
 
 //variables para animación
+float braviaryavance = 0.0f;
+bool avanzabraviary = true;
+float movOffsetbraviary = 0.5f;
+float anguloAlaBraviary = 0.0f;
+float rotacionBraviary = 0.0f;
+
+
+
+
 float movCoche;
 float movOffset;
 float rotllanta;
@@ -77,6 +86,17 @@ Model PiernaDerecha_M;
 Model PiernaIzquierda_M;
 Model BrazoIzquierdo_M;
 Model BrazoDerecho_M;
+
+//Modelos Braviary
+Model Braviary_M;
+Model AlaDerechaB_M;
+Model AlaIzquierdaB_M;
+
+//Modelos Archen
+Model Archen_M;
+Model AlaDerechaA_M;
+Model AlaIzquierdaA_M;
+
 
 
 Model Blackhawk_M;
@@ -286,12 +306,14 @@ float movCuerpoSnorlax_z = 0.0f;
 float giroSnorlax = 0.0f;
 // Brazos Snorlax
 float giroBrazoIzquierdo_x = 0.0f;
+float giroBrazoIzquierdo_y = 0.0f;
 float giroBrazoIzquierdo_z = 0.0f;
 float movBrazoIzquierdo_x = 0.0f;   // Movimiento lineal en X
 float movBrazoIzquierdo_z = 0.0f;   // Movimiento lineal en Z
 
 float giroBrazoDerecho_x = 0.0f;
 float giroBrazoDerecho_z = 0.0f;
+float giroBrazoDe_y = 0.0f;
 float movBrazoDerecho_x = 0.0f;     // Movimiento lineal en X
 float movBrazoDerecho_z = 0.0f;     // Movimiento lineal en Z
 
@@ -311,7 +333,7 @@ float movPiernaDerecha_z = 0.0f;    // Movimiento lineal en Z
 
 
 #define MAX_FRAMES 100 //Número de cuadros máximos
-int i_max_steps = 10000; //Número de pasos entre cuadros para interpolación, a mayor número , más lento será el movimiento
+int i_max_steps = 8000; //Número de pasos entre cuadros para interpolación, a mayor número , más lento será el movimiento
 int i_curr_steps = 0;
 
 typedef struct _frame
@@ -386,7 +408,7 @@ typedef struct _frame
 }FRAME;
 
 FRAME KeyFrame[MAX_FRAMES];
-int FrameIndex = 6;			//El número de cuadros guardados actualmente desde 0 para no sobreescribir
+int FrameIndex = 21;			//El número de cuadros guardados actualmente desde 0 para no sobreescribir
 bool play = false;
 int playIndex = 0;
 
@@ -741,10 +763,35 @@ int main()
 	PiernaDerecha_M.LoadModel("Models/piederechosnorlax.fbx");
 	PiernaIzquierda_M = Model();
 	PiernaIzquierda_M.LoadModel("Models/pieizquierdosnorlax.fbx");
-	BrazoIzquierdo_M = Model();	
+	BrazoIzquierdo_M = Model();
 	BrazoIzquierdo_M.LoadModel("Models/brazoizquierdosnorlax.fbx");
 	BrazoDerecho_M = Model();
 	BrazoDerecho_M.LoadModel("Models/brazoderechosnorlax.fbx");
+
+
+	//Modelos Braviary
+	Braviary_M = Model();
+	Braviary_M.LoadModel("Models/braviary.fbx");
+
+	AlaDerechaB_M = Model();
+	AlaDerechaB_M.LoadModel("Models/aladerechaB.fbx");
+
+	AlaIzquierdaB_M = Model();
+	AlaIzquierdaB_M.LoadModel("Models/alaizquierdaB.fbx");	
+
+
+	//Modelos Archen
+	Archen_M = Model();
+	Archen_M.LoadModel("Models/archen.fbx");	
+
+	AlaDerechaA_M = Model();
+	AlaDerechaA_M.LoadModel("Models/aladerechaarchen.fbx");
+
+
+	AlaIzquierdaA_M = Model();
+	AlaIzquierdaA_M.LoadModel("Models/alaizquierdaarchen.fbx");	
+
+
 
 	Blackhawk_M = Model();
 	Blackhawk_M.LoadModel("Models/uh60.obj");
@@ -752,7 +799,7 @@ int main()
 
 
 	std::vector<std::string> skyboxFaces;
-	
+
 	skyboxFaces.push_back("Textures/Skybox/central2.png");
 	skyboxFaces.push_back("Textures/Skybox/izquierda.png");
 	skyboxFaces.push_back("Textures/Skybox/abajo.png");
@@ -801,112 +848,304 @@ int main()
 
 
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
-		uniformSpecularIntensity = 0, uniformShininess = 0, uniformTextureOffset=0;
+		uniformSpecularIntensity = 0, uniformShininess = 0, uniformTextureOffset = 0;
 	GLuint uniformColor = 0;
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 1000.0f);
-	
+
 	movCoche = 0.0f;
 	movOffset = 0.01f;
 	rotllanta = 0.0f;
 	rotllantaOffset = 10.0f;
 	glm::vec3 posblackhawk = glm::vec3(2.0f, 0.0f, 0.0f);
-	
+
 	//---------PARA TENER KEYFRAMES GUARDADOS NO VOLATILES QUE SIEMPRE SE UTILIZARAN SE DECLARAN AQUÍ
 
 	// ---------------- KEYFRAMES SNORLAX CAMINANDO Y GIRANDO ----------------
 
-// --- Frame 0: posición inicial, mirando hacia -x ---
+// ===============================
+// === FRAME 0: posición inicial ===
+// ===============================
+
+// --- CUERPO ---
 	KeyFrame[0].movCuerpoSnorlax_x = 0.0f;
 	KeyFrame[0].movCuerpoSnorlax_z = 0.0f;
 	KeyFrame[0].giroSnorlax = 0.0f;
-	KeyFrame[0].giroBrazoIzquierdo_x = 0.0f;
-	KeyFrame[0].giroBrazoIzquierdo_z = 15.0f;
-	KeyFrame[0].giroBrazoDerecho_x = 0.0f;
-	KeyFrame[0].giroBrazoDerecho_z = -15.0f;
-	KeyFrame[0].giroPiernaIzquierda_x = 0.0f;
-	KeyFrame[0].giroPiernaIzquierda_z = -10.0f;
-	KeyFrame[0].giroPiernaDerecha_x = 0.0f;
-	KeyFrame[0].giroPiernaDerecha_z = 10.0f;
 
-	// --- Frame 1: da un paso hacia +x ---
+	// --- BRAZOS ---
+	KeyFrame[0].giroBrazoIzquierdo_x = 0.0f;
+	KeyFrame[0].giroBrazoIzquierdo_z = 45.0f;
+	KeyFrame[0].giroBrazoDerecho_x = 0.0f;
+	KeyFrame[0].giroBrazoDerecho_z = -45.0f;
+
+	// --- PIERNAS ---
+	KeyFrame[0].giroPiernaIzquierda_x = 0.0f;
+	KeyFrame[0].giroPiernaIzquierda_z = -20.0f;
+
+	KeyFrame[0].giroPiernaDerecha_x = 0.0f;
+	KeyFrame[0].giroPiernaDerecha_z = 20.0f;
+
+
+
+	// ===============================
+	// === FRAME 1: paso hacia +X ===
+	// ===============================
+
+	// --- CUERPO ---
 	KeyFrame[1].movCuerpoSnorlax_x = 2.0f;
 	KeyFrame[1].movCuerpoSnorlax_z = 0.0f;
 	KeyFrame[1].giroSnorlax = 0.0f;
-	KeyFrame[1].giroBrazoIzquierdo_x = 0.0f;
-	KeyFrame[1].giroBrazoIzquierdo_z = -15.0f;
-	KeyFrame[1].giroBrazoDerecho_x = 0.0f;
-	KeyFrame[1].giroBrazoDerecho_z = 15.0f;
-	KeyFrame[1].giroPiernaIzquierda_x = 0.0f;
-	KeyFrame[1].giroPiernaIzquierda_z = 10.0f;
-	KeyFrame[1].giroPiernaDerecha_x = 0.0f;
-	KeyFrame[1].giroPiernaDerecha_z = -10.0f;
 
-	// --- Frame 2: llega al final del paso hacia +x y empieza a girar hacia -z ---
+	// --- BRAZOS ---
+	KeyFrame[1].giroBrazoIzquierdo_x = 0.0f;
+	KeyFrame[1].giroBrazoIzquierdo_z = -45.0f;
+	KeyFrame[1].giroBrazoDerecho_x = 0.0f;
+	KeyFrame[1].giroBrazoDerecho_z = 45.0f;
+
+	// --- PIERNAS ---
+	KeyFrame[1].giroPiernaIzquierda_x = 0.0f;
+	KeyFrame[1].giroPiernaIzquierda_z = 20.0f;
+	KeyFrame[1].giroPiernaDerecha_x = 0.0f;
+	KeyFrame[1].giroPiernaDerecha_z = -20.0f;
+
+
+
+	// ============================================================
+// === FRAME 2: final del paso +X y empieza giro hacia -Z ===
+// ============================================================
+
+// --- CUERPO ---
 	KeyFrame[2].movCuerpoSnorlax_x = 4.0f;
 	KeyFrame[2].movCuerpoSnorlax_z = 0.0f;
 	KeyFrame[2].giroSnorlax = 45.0f; // empieza el giro
-	KeyFrame[2].giroBrazoIzquierdo_x = 0.0f;
-	KeyFrame[2].giroBrazoIzquierdo_z = 0.0f;
-	KeyFrame[2].giroBrazoDerecho_x = 0.0f;
-	KeyFrame[2].giroBrazoDerecho_z = -0.0f;
-	KeyFrame[2].giroPiernaIzquierda_x = 0.0f;
-	KeyFrame[2].giroPiernaIzquierda_z = 0.0f;
-	KeyFrame[2].giroPiernaDerecha_x = 0.0f;
-	KeyFrame[2].giroPiernaDerecha_z = 0.0f;
 
-	// --- Frame 3: termina el giro, ahora mirando hacia -z ---
+	// --- BRAZOS ---
+	KeyFrame[2].giroBrazoIzquierdo_z = 45.0f;
+	KeyFrame[2].giroBrazoIzquierdo_x = 45.0f;
+
+	KeyFrame[2].movBrazoIzquierdo_x = -0.8f;
+	KeyFrame[2].movBrazoIzquierdo_z = 0.8f;
+
+	KeyFrame[2].giroBrazoDerecho_x = 45.0f;
+	KeyFrame[2].giroBrazoDerecho_z = -45.0f;
+
+	KeyFrame[2].movBrazoDerecho_x = 0.8f;
+	KeyFrame[2].movBrazoDerecho_z = -0.8f;
+
+	// --- PIERNAS --- 
+	KeyFrame[2].giroPiernaIzquierda_x = 45.0f;
+	KeyFrame[2].giroPiernaIzquierda_z = -20.0f; // como brazo derecho (-Z)
+
+	KeyFrame[2].movPiernaIzquierda_x = 0.2f;
+	KeyFrame[2].movPiernaIzquierda_z = -0.8f;
+
+	KeyFrame[2].giroPiernaDerecha_x = 45.0f;
+	KeyFrame[2].giroPiernaDerecha_z = 20.0f; // como brazo izquierdo (+Z)
+	KeyFrame[2].movPiernaDerecha_x = -0.8f;
+	KeyFrame[2].movPiernaDerecha_z = 0.8f;
+
+
+
+	// ====================================================
+	// === FRAME 3: termina el giro, mira hacia -Z ===
+	// ====================================================
+
+	// --- CUERPO ---
 	KeyFrame[3].movCuerpoSnorlax_x = 4.0f;
 	KeyFrame[3].movCuerpoSnorlax_z = -0.5f;
-	KeyFrame[3].giroSnorlax = 90.0f; // ahora mira hacia -z
-	KeyFrame[3].giroBrazoIzquierdo_x = 15.0f;
-	KeyFrame[3].giroBrazoIzquierdo_z = 0.0f;
-	KeyFrame[3].giroBrazoDerecho_x = 0.0f;
-	KeyFrame[3].giroBrazoDerecho_z = 45.0f;
-	KeyFrame[3].giroPiernaIzquierda_x = -10.0f;
-	KeyFrame[3].giroPiernaIzquierda_z = 0.0f;
-	KeyFrame[3].giroPiernaDerecha_x = 10.0f;
-	KeyFrame[3].giroPiernaDerecha_z = 0.0f;
+	KeyFrame[3].giroSnorlax = 90.0f;
 
-	// --- Frame 4: camina hacia -z ---
+	// --- BRAZOS ---
+	KeyFrame[3].giroBrazoIzquierdo_z = -45.0f;
+	KeyFrame[3].giroBrazoIzquierdo_x = 90.0f;
+
+	KeyFrame[3].movBrazoIzquierdo_x = -0.8f;
+	KeyFrame[3].movBrazoIzquierdo_z = 0.8f;
+
+	KeyFrame[3].giroBrazoDerecho_x = 90.0f;
+	KeyFrame[3].giroBrazoDerecho_z = 45.0f;
+
+	KeyFrame[3].movBrazoDerecho_x = 0.8f;
+	KeyFrame[3].movBrazoDerecho_z = -0.8f;
+
+	// --- PIERNAS ---
+	KeyFrame[3].giroPiernaIzquierda_x = 90.0f;
+	KeyFrame[3].giroPiernaIzquierda_z = 45.0f;
+
+	KeyFrame[3].movPiernaIzquierda_x = 0.2f;
+	KeyFrame[3].movPiernaIzquierda_z = -0.8f;
+
+	KeyFrame[3].giroPiernaDerecha_x = 90.0f;
+	KeyFrame[3].giroPiernaDerecha_z = -45.0f;
+	KeyFrame[3].movPiernaDerecha_x = -0.8f;
+	KeyFrame[3].movPiernaDerecha_z = 0.8f;
+
+
+
+	// =======================================
+	// === FRAME 4: camina hacia -Z ===
+	// =======================================
+
+	// --- CUERPO ---
 	KeyFrame[4].movCuerpoSnorlax_x = 4.0f;
 	KeyFrame[4].movCuerpoSnorlax_z = -3.5f;
 	KeyFrame[4].giroSnorlax = 90.0f;
-	KeyFrame[4].giroBrazoIzquierdo_x = -15.0f;
-	KeyFrame[4].giroBrazoIzquierdo_z = 0.0f;
-	KeyFrame[4].giroBrazoDerecho_x = 15.0f;
-	KeyFrame[4].giroBrazoDerecho_z = 0.0f;
-	KeyFrame[4].giroPiernaIzquierda_x = 10.0f;
-	KeyFrame[4].giroPiernaIzquierda_z = 0.0f;
-	KeyFrame[4].giroPiernaDerecha_x = -10.0f;
-	KeyFrame[4].giroPiernaDerecha_z = 0.0f;
 
-	// --- Frame 5: sigue avanzando hacia -z ---
+	// --- BRAZOS ---
+	KeyFrame[4].giroBrazoIzquierdo_x = 90.0f;
+	KeyFrame[4].giroBrazoIzquierdo_z = 45.0f;
+
+	KeyFrame[4].movBrazoIzquierdo_x = -0.8f;
+	KeyFrame[4].movBrazoIzquierdo_z = 0.8f;
+
+	KeyFrame[4].giroBrazoDerecho_x = 90.0f;
+	KeyFrame[4].giroBrazoDerecho_z = -45.0f;
+
+	KeyFrame[4].movBrazoDerecho_x = 0.8f;
+	KeyFrame[4].movBrazoDerecho_z = -0.8f;
+
+	// --- PIERNAS --- 
+	KeyFrame[4].giroPiernaIzquierda_x = 90.0f;
+	KeyFrame[4].giroPiernaIzquierda_z = -20.0f;
+
+	KeyFrame[4].movPiernaIzquierda_x = 0.2f;
+	KeyFrame[4].movPiernaIzquierda_z = -0.8f;
+
+	KeyFrame[4].giroPiernaDerecha_x = 90.0f;
+	KeyFrame[4].giroPiernaDerecha_z = 20.0f;
+
+	KeyFrame[4].movPiernaDerecha_x = -0.8f;
+	KeyFrame[4].movPiernaDerecha_z = 0.8f;
+
+
+
+	// =======================================
+	// === FRAME 5: sigue avanzando hacia -Z ===
+	// =======================================
+
+	// --- CUERPO ---
 	KeyFrame[5].movCuerpoSnorlax_x = 4.0f;
 	KeyFrame[5].movCuerpoSnorlax_z = -7.0f;
 	KeyFrame[5].giroSnorlax = 90.0f;
-	KeyFrame[5].giroBrazoIzquierdo_x = 15.0f;
-	KeyFrame[5].giroBrazoIzquierdo_z = 0.0f;
-	KeyFrame[5].giroBrazoDerecho_x = -15.0f;
-	KeyFrame[5].giroBrazoDerecho_z = 0.0f;
-	KeyFrame[5].giroPiernaIzquierda_x = -10.0f;
-	KeyFrame[5].giroPiernaIzquierda_z = 0.0f;
-	KeyFrame[5].giroPiernaDerecha_x = 10.0f;
-	KeyFrame[5].giroPiernaDerecha_z = 0.0f;
 
-	// --- Frame 6: último paso hacia -z ---
+	// --- BRAZOS ---
+	KeyFrame[5].giroBrazoIzquierdo_x = 90.0f;
+	KeyFrame[5].giroBrazoIzquierdo_z = -45.0f;
+
+	KeyFrame[5].movBrazoIzquierdo_x = -0.8f;
+	KeyFrame[5].movBrazoIzquierdo_z = 0.8f;
+
+	KeyFrame[5].giroBrazoDerecho_x = 90.0f;
+	KeyFrame[5].giroBrazoDerecho_z = 45.0f;
+
+	KeyFrame[5].movBrazoDerecho_x = 0.8f;
+	KeyFrame[5].movBrazoDerecho_z = -0.8f;
+
+	// --- PIERNAS --- (brazos invertidos)
+	KeyFrame[5].giroPiernaIzquierda_x = 90.0f;
+	KeyFrame[5].giroPiernaIzquierda_z = 45.0f;
+
+	KeyFrame[5].movPiernaIzquierda_x = 0.0f;
+	KeyFrame[5].movPiernaIzquierda_z = -0.8f;
+
+	KeyFrame[5].giroPiernaDerecha_x = 90.0f;
+	KeyFrame[5].giroPiernaDerecha_z = -45.0f;
+
+	KeyFrame[5].movPiernaDerecha_x = -0.8f;
+	KeyFrame[5].movPiernaDerecha_z = 0.8f;
+
+
+
+	// =======================================
+	// === FRAME 6: último paso hacia -Z ===
+	// =======================================
+
+	// --- CUERPO ---
 	KeyFrame[6].movCuerpoSnorlax_x = 4.0f;
 	KeyFrame[6].movCuerpoSnorlax_z = -10.0f;
 	KeyFrame[6].giroSnorlax = 90.0f;
-	KeyFrame[6].giroBrazoIzquierdo_x = -15.0f;
-	KeyFrame[6].giroBrazoIzquierdo_z = 0.0f;
-	KeyFrame[6].giroBrazoDerecho_x = 15.0f;
-	KeyFrame[6].giroBrazoDerecho_z = 0.0f;
-	KeyFrame[6].giroPiernaIzquierda_x = 10.0f;
-	KeyFrame[6].giroPiernaIzquierda_z = 0.0f;
-	KeyFrame[6].giroPiernaDerecha_x = -10.0f;
-	KeyFrame[6].giroPiernaDerecha_z = 0.0f;
+
+	// --- BRAZOS ---
+	KeyFrame[6].giroBrazoIzquierdo_x = 90.0f;
+	KeyFrame[6].giroBrazoIzquierdo_z = 45.0f;
+
+	KeyFrame[6].movBrazoIzquierdo_x = -0.8f;
+	KeyFrame[6].movBrazoIzquierdo_z = 0.8f;
+
+	KeyFrame[6].giroBrazoDerecho_x = 90.0f;
+	KeyFrame[6].giroBrazoDerecho_z = -45.0f;
+
+	KeyFrame[6].movBrazoDerecho_x = 0.8f;
+	KeyFrame[6].movBrazoDerecho_z = -0.8f;
+
+	// --- PIERNAS 
+	KeyFrame[6].giroPiernaIzquierda_x = 90.0f;
+	KeyFrame[6].giroPiernaIzquierda_z = -20.0f;
+
+	KeyFrame[6].movPiernaIzquierda_x = 0.2f;
+	KeyFrame[6].movPiernaIzquierda_z = -0.8f;
+
+	KeyFrame[6].giroPiernaDerecha_x = 90.0f;
+	KeyFrame[6].giroPiernaDerecha_z = 20.0f;
+
+	KeyFrame[6].movPiernaDerecha_x = -0.8f;
+	KeyFrame[6].movPiernaDerecha_z = 0.8f;
+
+
+	//Generando frames de forma infinita
+	// =======================================
+// === FRAME 7 al 26: avance hacia -Z ===
+// =======================================
+
+	for (int i = 7; i <= 26; i++) {
+		KeyFrame[i] = KeyFrame[6]; // Copia base del frame 6
+	}
+
+	// === Movimiento del cuerpo
+	KeyFrame[7].movCuerpoSnorlax_z = -13.0f;
+	KeyFrame[8].movCuerpoSnorlax_z = -16.0f;
+	KeyFrame[9].movCuerpoSnorlax_z = -19.0f;
+	KeyFrame[10].movCuerpoSnorlax_z = -22.0f;
+	KeyFrame[11].movCuerpoSnorlax_z = -25.0f;
+	KeyFrame[12].movCuerpoSnorlax_z = -28.0f;
+	KeyFrame[13].movCuerpoSnorlax_z = -31.0f;
+	KeyFrame[14].movCuerpoSnorlax_z = -34.0f;
+	KeyFrame[15].movCuerpoSnorlax_z = -37.0f;
+	KeyFrame[16].movCuerpoSnorlax_z = -40.0f;
+	KeyFrame[17].movCuerpoSnorlax_z = -43.0f;
+	KeyFrame[18].movCuerpoSnorlax_z = -46.0f;
+	KeyFrame[19].movCuerpoSnorlax_z = -49.0f;
+	KeyFrame[20].movCuerpoSnorlax_z = -52.0f;
+	KeyFrame[21].movCuerpoSnorlax_z = -55.0f;
+	KeyFrame[22].movCuerpoSnorlax_z = -58.0f;
+	KeyFrame[23].movCuerpoSnorlax_z = -61.0f;
+	KeyFrame[24].movCuerpoSnorlax_z = -64.0f;
+	KeyFrame[25].movCuerpoSnorlax_z = -67.0f;
+	KeyFrame[26].movCuerpoSnorlax_z = -70.0f;
+
+	// === Movimiento alternado de brazos y piernas ===
+	for (int i = 7; i <= 26; i++) {
+		if (i % 2 == 0) {
+			// Movimiento 1: brazo izquierdo adelante, pierna derecha adelante
+			KeyFrame[i].giroBrazoIzquierdo_z = 45.0f;
+			KeyFrame[i].giroBrazoDerecho_z = -45.0f;
+
+			KeyFrame[i].giroPiernaIzquierda_z = -20.0f;
+			KeyFrame[i].giroPiernaDerecha_z = 20.0f;
+		}
+		else {
+			// Movimiento 2: brazo izquierdo atrás, pierna derecha atrás
+			KeyFrame[i].giroBrazoIzquierdo_z = -45.0f;
+			KeyFrame[i].giroBrazoDerecho_z = 45.0f;
+
+			KeyFrame[i].giroPiernaIzquierda_z = 20.0f;
+			KeyFrame[i].giroPiernaDerecha_z = -20.0f;
+		}
+	}
+
+
 
 	
+
 
 	//Se agregan nuevos frames 
 
@@ -932,7 +1171,40 @@ int main()
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
 
-		angulovaria += 0.5f*deltaTime;
+		angulovaria += 8.0f * deltaTime;
+		
+	
+		//dragonavance
+
+		anguloAlaBraviary += 8.0f * deltaTime;
+		float aleteoBraviary = sin(glm::radians(anguloAlaBraviary)) * 30; // 30° es la amplitud del movimiento
+
+		float aleteoArchen = sin(glm::radians(anguloAlaBraviary)) * 60;
+		// BANDERA DE AVANCE Y REGRESO
+
+		if (avanzabraviary) {
+			if (braviaryavance > -250.0f) {
+				braviaryavance -= movOffsetbraviary * deltaTime;
+			}
+			else {
+				avanzabraviary = false;
+				rotacionBraviary = 180.0f; // Girar hacia atrás
+			}
+		}
+		else {
+			if (braviaryavance < 325.0f) {
+				braviaryavance += movOffsetbraviary * deltaTime;
+			}
+			else {
+				avanzabraviary = true;
+				rotacionBraviary = 0.0f; // Volver al frente
+			}
+		}
+
+
+
+
+
 
 		if (movCoche < 30.0f)
 		{
@@ -941,6 +1213,7 @@ int main()
 		}
 		rotllanta += rotllantaOffset * deltaTime;
 
+	
 
 		//Recibir eventos del usuario
 		glfwPollEvents();
@@ -1011,10 +1284,11 @@ int main()
 		CuerpoSnorlax_M.RenderModel();
 
 
-		// Pierna derecha
+		// --- Pierna derecha ---
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(0.2f, -1.1f, -0.5f));
-		model = glm::rotate(model, giroPiernaDerecha_x * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); // Giro eje X
+		model = glm::translate(model, glm::vec3(0.2f + movPiernaDerecha_x,-1.1f,-0.5f + movPiernaDerecha_z
+		));
+		model = glm::rotate(model, giroPiernaDerecha_x * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); // Giro eje X
 		model = glm::rotate(model, giroPiernaDerecha_z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // Giro eje Z
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
@@ -1022,10 +1296,10 @@ int main()
 		PiernaDerecha_M.RenderModel();
 
 
-		// Pierna izquierda
+		// --- Pierna izquierda ---
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(0.2f, -1.1f, 0.5f));
-		model = glm::rotate(model, giroPiernaIzquierda_x * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); // Giro eje X
+		model = glm::translate(model, glm::vec3(0.2f + movPiernaIzquierda_x,-1.1f,0.5f + movPiernaIzquierda_z));
+		model = glm::rotate(model, giroPiernaIzquierda_x * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); // Giro eje X
 		model = glm::rotate(model, giroPiernaIzquierda_z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // Giro eje Z
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -1034,10 +1308,10 @@ int main()
 		PiernaIzquierda_M.RenderModel();
 
 
-		// Brazo izquierdo
+		// --- Brazo izquierdo ---
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(0.0f, 0.6f, -0.7f));
-		model = glm::rotate(model, giroBrazoIzquierdo_x * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); // Giro eje X
+		model = glm::translate(model, glm::vec3(0.0f + movBrazoIzquierdo_x,0.6f,-0.7f + movBrazoIzquierdo_z));
+		model = glm::rotate(model, giroBrazoIzquierdo_x * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); // Giro eje X
 		model = glm::rotate(model, giroBrazoIzquierdo_z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // Giro eje Z
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -1046,10 +1320,10 @@ int main()
 		BrazoIzquierdo_M.RenderModel();
 
 
-		// Brazo derecho
+		// --- Brazo derecho ---
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(0.0f, 0.6f, 0.75f));
-		model = glm::rotate(model, giroBrazoDerecho_x * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); // Giro eje X
+		model = glm::translate(model, glm::vec3(0.0f + movBrazoDerecho_x,0.6f,0.75f + movBrazoDerecho_z));
+		model = glm::rotate(model, giroBrazoDerecho_x * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); // Giro eje X
 		model = glm::rotate(model, giroBrazoDerecho_z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // Giro eje Z
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -1059,6 +1333,69 @@ int main()
 
 
 		//-----------------------------------------
+
+
+
+
+		//-----BRAVIARY -----
+
+		// Matriz base del Braviary
+		glm::mat4 modelBraviary = glm::mat4(1.0f);
+		modelBraviary = glm::translate(modelBraviary, glm::vec3(1.05f - braviaryavance, 50.0f + sin(glm::radians(angulovaria)), 6.0f));
+		modelBraviary = glm::scale(modelBraviary, glm::vec3(0.3f, 0.3f, 0.3f));
+		modelBraviary = glm::rotate(modelBraviary, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		modelBraviary = glm::rotate(modelBraviary, glm::radians(rotacionBraviary), glm::vec3(0.0f, 0.0f, 1.0f)); // <<--- AQUÍ
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelBraviary));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Braviary_M.RenderModel();
+
+		//AlaDerecha
+		glm::mat4 modelAlaDerechaB = modelBraviary;
+		modelAlaDerechaB = glm::translate(modelAlaDerechaB, glm::vec3(6.5f, -3.0f, 9.5f));
+		modelAlaDerechaB = glm::rotate(modelAlaDerechaB, glm::radians(-aleteoBraviary), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelAlaDerechaB));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		AlaDerechaB_M.RenderModel();
+
+		//Alaizquierdda
+		glm::mat4 modelAlaIzquierdaB = modelBraviary; // también hereda del cuerpo
+		modelAlaIzquierdaB = glm::translate(modelAlaIzquierdaB, glm::vec3(6.5f, 3.0f, 9.5f));
+		modelAlaIzquierdaB = glm::rotate(modelAlaIzquierdaB, glm::radians(aleteoBraviary), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelAlaIzquierdaB));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		AlaIzquierdaB_M.RenderModel();
+
+
+
+
+		//-----Archen ----
+
+		glm::mat4 modelArchen = glm::mat4(1.0f);
+		modelArchen = glm::translate(modelArchen, glm::vec3(1.05f - braviaryavance, 50.0f + sin(glm::radians(angulovaria)) , 20.0f));
+		modelArchen = glm::scale(modelArchen, glm::vec3(0.03f, 0.03f, 0.03f));
+		modelArchen = glm::rotate(modelArchen, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		modelArchen = glm::rotate(modelArchen, 90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		modelArchen = glm::rotate(modelArchen, glm::radians(rotacionBraviary), glm::vec3(0.0f, 0.0f, 1.0f)); // <<--- AQUÍ
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelArchen));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Archen_M.RenderModel();
+
+		//AlaDerecha
+		glm::mat4 modelAlaDerechaA = modelArchen;
+		modelAlaDerechaA = glm::translate(modelAlaDerechaA, glm::vec3(-5.5f, 5.0f, 25.0f));
+		modelAlaDerechaA = glm::rotate(modelAlaDerechaA, glm::radians(-aleteoArchen), glm::vec3(1.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelAlaDerechaA));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		AlaDerechaA_M.RenderModel();
+
+		//Alaizquierdda
+		glm::mat4 modelAlaIzquierdaA = modelArchen; // también hereda del cuerpo
+		modelAlaIzquierdaA = glm::translate(modelAlaIzquierdaA, glm::vec3(5.5f, 5.0f,25.0f));
+		modelAlaIzquierdaA = glm::rotate(modelAlaIzquierdaA, glm::radians(aleteoArchen), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelAlaIzquierdaA));
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		AlaIzquierdaA_M.RenderModel();
+
 
 
 
