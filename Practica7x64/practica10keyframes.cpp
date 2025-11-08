@@ -61,7 +61,7 @@ int i_curr_stepsMK = 0;
 
 //Carro Dedede
 float desplazamientoCarro = 0.0f;       
-float incrementoCarro = 0.001f;           
+float incrementoCarro = 0.3f;           
 bool carroAvanzando = false;            
 
 float movCoche;
@@ -81,7 +81,7 @@ bool pokebolaAbierta = false;
 //Magolor
 
 float desplazamientoMagolor = 0.0f;     
-float incrementoMagolor = 0.001f;         
+float incrementoMagolor = 0.01f;         
 bool magolorSubiendo = false;           
 bool magolorEnMovimiento = false;
 
@@ -100,13 +100,13 @@ bool camaraAereaActiva = false;
 
 //Camra Waddle
 bool camaraTerceraPersonaActiva = false;
-glm::vec3 posicionWaddle = glm::vec3(30.0f, 1.5f, 10.0f);
+glm::vec3 posicionWaddle = glm::vec3(30.0f, 3.5f, 10.0f);
 float rotacionWaddle = 0.0f;
-float velocidadWaddle = 0.1f;
+float velocidadWaddle = 0.5f;
 float anguloPiernas = 0.0f;
 bool caminando = false;
 float velocidadGiro = 10.0f;    
-float escalaWaddle = 0.5f;
+float escalaWaddle = 3.0f;
 
 
 
@@ -457,7 +457,7 @@ float giroMetaKnight_z = 0.0f;  // Rotación alrededor de Z
 
 #define MAX_FRAMES 100 //Número de cuadros máximos
 int i_max_steps = 8000; //Número de pasos entre cuadros para interpolación, a mayor número , más lento será el movimiento
-int i_max_stepsMK = 20000;
+int i_max_stepsMK = 3000;
 int i_curr_steps = 0;
 
 typedef struct _frame
@@ -1125,7 +1125,7 @@ int main()
 
 
 	float lastSwitchTime = 0.0f; // Tiempo del último cambio
-	float switchInterval = 10.0f; // Intervalo en segundos
+	float switchInterval = 90.0f; // Intervalo en segundos
 	bool useFirstSkybox = true;  // Flag para saber qué skybox usar
 
 	Material_brillante = Material(4.0f, 256);
@@ -1551,7 +1551,7 @@ int main()
 
 			if (camaraTerceraPersonaActiva)
 			{
-				camera.followTargetThirdPerson(posicionWaddle, rotacionWaddle, 8.0f, 4.0f, 10.0f, deltaTime);
+				camera.followTargetThirdPerson(posicionWaddle, rotacionWaddle, 20.0f, 4.0f, 10.0f, deltaTime);
 				view = camera.calculateViewMatrix();
 			}
 			else if (camaraAereaActiva)
@@ -1647,10 +1647,10 @@ int main()
 
 			// Cuerpo Snorlax
 			model = glm::mat4(1.0f);
-			model = glm::translate(model, glm::vec3(0.0f + movCuerpoSnorlax_x, 1.32f, -2.0f + movCuerpoSnorlax_z));
+			model = glm::translate(model, glm::vec3(0.0f + movCuerpoSnorlax_x, 8.0f, -2.0f + movCuerpoSnorlax_z));
+			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f)); //escala original 0.5
 			modelaux = model;
 			model = glm::rotate(model, giroSnorlax * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); // Giro del cuerpo
-			model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 			model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -1659,12 +1659,12 @@ int main()
 
 			// --- Pierna derecha ---
 			model = modelaux;
-			model = glm::translate(model, glm::vec3(0.2f + movPiernaDerecha_x, -1.1f, -0.5f + movPiernaDerecha_z
+			model = glm::translate(model, glm::vec3(1.8f + movPiernaDerecha_x, -1.1f, -0.5f + movPiernaDerecha_z
 			));
 			model = glm::rotate(model, giroPiernaDerecha_x * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); // Giro eje X
 			model = glm::rotate(model, giroPiernaDerecha_z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // Giro eje Z
 			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-			model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+			model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 			PiernaDerecha_M.RenderModel();
 
@@ -1714,8 +1714,8 @@ int main()
 
 			// Matriz base del Braviary
 			glm::mat4 modelBraviary = glm::mat4(1.0f);
-			modelBraviary = glm::translate(modelBraviary, glm::vec3(1.05f - braviaryavance, 50.0f + sin(glm::radians(angulovaria)), 6.0f));
-			modelBraviary = glm::scale(modelBraviary, glm::vec3(0.3f, 0.3f, 0.3f));
+			modelBraviary = glm::translate(modelBraviary, glm::vec3(1.05f - braviaryavance, 90.0f + sin(glm::radians(angulovaria)), 6.0f));
+			modelBraviary = glm::scale(modelBraviary, glm::vec3(1.0f, 1.0f, 1.0f));
 			modelBraviary = glm::rotate(modelBraviary, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 			modelBraviary = glm::rotate(modelBraviary, glm::radians(rotacionBraviary), glm::vec3(0.0f, 0.0f, 1.0f)); // <<--- AQUÍ
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelBraviary));
@@ -1744,8 +1744,8 @@ int main()
 			//-----Archen ----
 
 			glm::mat4 modelArchen = glm::mat4(1.0f);
-			modelArchen = glm::translate(modelArchen, glm::vec3(1.05f - braviaryavance, 50.0f + sin(glm::radians(angulovaria)), 20.0f));
-			modelArchen = glm::scale(modelArchen, glm::vec3(0.03f, 0.03f, 0.03f));
+			modelArchen = glm::translate(modelArchen, glm::vec3(1.05f - braviaryavance, 90.0f + sin(glm::radians(angulovaria)), 70.0f));
+			modelArchen = glm::scale(modelArchen, glm::vec3(0.1f, 0.1f, 0.1f));
 			modelArchen = glm::rotate(modelArchen, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 			modelArchen = glm::rotate(modelArchen, 90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 			modelArchen = glm::rotate(modelArchen, glm::radians(rotacionBraviary), glm::vec3(0.0f, 0.0f, 1.0f)); // <<--- AQUÍ
@@ -1773,9 +1773,9 @@ int main()
 
 			//Nave Metaknight
 			model = glm::mat4(1.0);
-			posblackhawk = glm::vec3(45.0f + movMetaKnight_x, 40.0f + movMetaKnight_y, 16.0f + movMetaKnight_z);
+			posblackhawk = glm::vec3(45.0f + movMetaKnight_x, 500.0f + movMetaKnight_y, 16.0f + movMetaKnight_z);
 			model = glm::translate(model, posblackhawk);
-			model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+			model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
 			model = glm::rotate(model, giroMetaKnight_x * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 			model = glm::rotate(model, giroMetaKnight_y * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 			model = glm::rotate(model, giroMetaKnight_z * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -1791,8 +1791,8 @@ int main()
 			float time = glfwGetTime();
 
 			// Escala base y cuánto se infla
-			float scaleBase = 0.03f;
-			float scaleAmplitude = 0.02f; // más inflado
+			float scaleBase = 0.1f;
+			float scaleAmplitude = 0.2f; // más inflado
 
 			// Escala oscilante, siempre >= scaleBase
 			float scale = scaleBase + scaleAmplitude * (sin(time * 3.0f) * 0.5f + 0.5f);
@@ -1802,7 +1802,8 @@ int main()
 
 			// Jigglypuff
 			glm::mat4 modelJigglypuff = glm::mat4(1.0f);
-			modelJigglypuff = glm::translate(modelJigglypuff, glm::vec3(1.05f, 0.5f + y, 20.0f));
+			modelJigglypuff = glm::translate(modelJigglypuff, glm::vec3(15.0f, 5.5f + y, 160.0f));
+			modelJigglypuff = glm::rotate(modelJigglypuff, -180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 			modelJigglypuff = glm::scale(modelJigglypuff, glm::vec3(scale, scale, scale));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelJigglypuff));
 			Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
@@ -1819,16 +1820,16 @@ int main()
 			float timeMK = glfwGetTime();
 
 			// Movimiento vertical suave (planeo)
-			float alturaMK = 10.0f + 0.5f * sin(timeMK * 2.0f);
+			float alturaMK = 10.0f + 5.5f * sin(timeMK * 2.0f);
 
 			// Aleteo con función seno
 			float aleteoMK = 30.0f * sin(timeMK * 5.0f); // velocidad de batido
 
 			// Movimiento de brazos (ligero vaivén)
-			float movimientoBrazos = 10.0f * sin(timeMK * 2.5f);
+			float movimientoBrazos = 30.0f * sin(timeMK * 2.5f);
 
 			// Movimiento de piernas (coordinado con brazos)
-			float movimientoPiernas = -10.0f * sin(timeMK * 2.5f);
+			float movimientoPiernas = -30.0f * sin(timeMK * 2.5f);
 
 			// Giro de espada
 			float rotacionEspada = 15.0f * sin(timeMK * 4.0f);
@@ -1836,8 +1837,8 @@ int main()
 
 			// ----- META KNIGHT -----
 			glm::mat4 modelMetaKnight = glm::mat4(1.0f);
-			modelMetaKnight = glm::translate(modelMetaKnight, glm::vec3(10.0f, alturaMK, 0.0f)); // movimiento vertical animado
-			modelMetaKnight = glm::scale(modelMetaKnight, glm::vec3(0.1f, 0.1f, 0.1f));
+			modelMetaKnight = glm::translate(modelMetaKnight, glm::vec3(150.0f, alturaMK, 200.0f)); // movimiento vertical animado
+			modelMetaKnight = glm::scale(modelMetaKnight, glm::vec3(0.4f, 0.4f, 0.4f));
 			modelMetaKnight = glm::rotate(modelMetaKnight, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelMetaKnight));
 			Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
@@ -1927,9 +1928,9 @@ int main()
 			
 
 			glm::mat4 modelEevee = glm::mat4(1.0f);
-			modelEevee = glm::translate(modelEevee, glm::vec3(0.0, -0.5, 5.0));  // posición global
-			modelEevee = glm::scale(modelEevee, glm::vec3(0.01f, 0.01f, 0.01f));                      // escala general
-			//modelEevee = glm::rotate(modelEevee, glm::radians(rotEevee), glm::vec3(0.0f, 1.0f, 0.0f)); // rotación en eje Y
+			modelEevee = glm::translate(modelEevee, glm::vec3(170.0f, -5.0f, 130.0f));  // posición global
+			modelEevee = glm::scale(modelEevee, glm::vec3(0.05f, 0.05f, 0.05f));                      // escala general
+			modelEevee = glm::rotate(modelEevee, -90 * toRadians , glm::vec3(0.0f, 1.0f, 0.0f)); // rotación en eje Y
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelEevee));
 			Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 			Eevee_M.RenderModel();
@@ -1948,21 +1949,21 @@ int main()
 			if (carroAvanzando)
 			{
 				// Se mueve hacia adelante mientras no sobrepase el límite
-				if (desplazamientoCarro < 50.0f)
+				if (desplazamientoCarro < 80.0f)
 					desplazamientoCarro += incrementoCarro;
 			}
 			else
 			{
 				// Se mueve hacia atrás mientras no vuelva al punto inicial
-				if (desplazamientoCarro > 0.0f)
+				if (desplazamientoCarro > -80.0f)
 					desplazamientoCarro -= incrementoCarro;
 			}
 
 			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, glm::vec3(10.0, 0.5, 10.0 + desplazamientoCarro));  // posición global
-			model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));                      // escala general
+			model = glm::translate(model, glm::vec3(50.0 + desplazamientoCarro, 0.5, -200.0f ));  // posición global
+			model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));                      // escala general
 			model= glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f,0.0f)); // apertura animada
-			model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // apertura animada
+			model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // apertura animada
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 			Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 			CarroDedede_M.RenderModel();
@@ -1992,8 +1993,8 @@ int main()
 
 			//Magolor
 			glm::mat4 modelMagolor = glm::mat4(1.0f);
-			modelMagolor = glm::translate(modelMagolor, glm::vec3(20.0, 1.5f + desplazamientoMagolor, 10.0));  // posición global
-			modelMagolor = glm::scale(modelMagolor, glm::vec3(1.5f, 1.5f, 1.5f));                      // escala general
+			modelMagolor = glm::translate(modelMagolor, glm::vec3(-30.0, 3.5f + desplazamientoMagolor, -50.0));  // posición global
+			modelMagolor = glm::scale(modelMagolor, glm::vec3(4.5f, 4.5f, 4.5f));                      // escala general
 			//modelMagolor = glm::rotate(modelMagolor, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); // apertura animada
 			//modelMagolor = glm::rotate(modelMagolor, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); // apertura animada
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelMagolor));
@@ -2042,6 +2043,8 @@ int main()
 			piernaI = glm::rotate(piernaI, glm::radians(-anguloPiernas), glm::vec3(1.0f, 0.0f, 0.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(piernaI));
 			PiernaWaddleI_M.RenderModel();
+
+			
 
 			//===============================================ESCENARIO=================================================
 //----- RING -----
@@ -2340,7 +2343,7 @@ int main()
 			PuestoPapas_M.RenderModel();
 
 
-			/*
+			
 			//---- CAMINO -----
 			model = glm::mat4(1.0);
 			model = glm::translate(model, glm::vec3(250.0f, 0.2f, 0.3f));
@@ -2349,7 +2352,7 @@ int main()
 			model = glm::scale(model, glm::vec3(0.094f, 0.094f, 0.094f));
 			//model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			Camino_M.RenderModel();*/
+			Camino_M.RenderModel();
 
 
 
@@ -2375,14 +2378,14 @@ int main()
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 			MuroPrehispanico_M.RenderModel();
 
-			/*
+			
 			//----- muro 3 -----
 			model = modelaux;
 			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
 			modelaux = model;
 			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			MuroPrehispanico_M.RenderModel(); */
+			MuroPrehispanico_M.RenderModel(); 
 
 			//----- muro 4 puede que se quite-----
 			model = modelaux;
@@ -2416,14 +2419,14 @@ int main()
 			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 			MuroPrehispanico_M.RenderModel();
-			/*
+			
 			//----- muro 8-----
 			model = modelaux;
 			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
 			modelaux = model;
 			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			MuroPrehispanico_M.RenderModel();*/
+			MuroPrehispanico_M.RenderModel();
 
 			//----- muro 9-----
 			model = modelaux;
@@ -2473,7 +2476,7 @@ int main()
 			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 			MuroPrehispanico_M.RenderModel();
-			/*
+			
 			//----- muro 15-----
 			model = modelaux;
 			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
@@ -2488,7 +2491,7 @@ int main()
 			modelaux = model;
 			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			MuroPrehispanico_M.RenderModel();*/
+			MuroPrehispanico_M.RenderModel();
 
 
 			//---- MUROS 2 CON JERARQUIA -----
@@ -2509,14 +2512,14 @@ int main()
 			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 			MuroPrehispanico2_M.RenderModel();
-			/*
+			
 			//----- muro 3-----
 			model = modelaux;
 			model = glm::translate(model, glm::vec3(0.0f, 51.75f, 0.0f));
 			modelaux = model;
 			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			MuroPrehispanico2_M.RenderModel();*/
+			MuroPrehispanico2_M.RenderModel();
 
 			//----- muro 4 puede que se quite -----
 			model = modelaux;
@@ -2543,14 +2546,14 @@ int main()
 			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 			MuroPrehispanico2_M.RenderModel();
-			/*
+			
 			//----- muro 7-----
 			model = modelaux;
 			model = glm::translate(model, glm::vec3(0.0f, 51.75f, 0.0f));
 			modelaux = model;
 			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			MuroPrehispanico2_M.RenderModel();*/
+			MuroPrehispanico2_M.RenderModel();
 
 			//----- muro 8-----
 			model = modelaux;
@@ -2609,7 +2612,7 @@ int main()
 			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 			MuroPrehispanico2_M.RenderModel();
-			/*
+			
 			//----- muro 15-----
 			model = modelaux;
 			model = glm::translate(model, glm::vec3(0.0f, 51.75f, 0.0f));
@@ -2624,9 +2627,8 @@ int main()
 			modelaux = model;
 			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-			MuroPrehispanico2_M.RenderModel();*/
-
-
+			MuroPrehispanico2_M.RenderModel();
+			
 
 
 
@@ -2715,6 +2717,7 @@ int main()
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 			Camino_M.RenderModel();
 
+			
 			glUseProgram(0);
 
 		mainWindow.swapBuffers();
@@ -2776,17 +2779,7 @@ void inputKeyframes(bool* keys)
 	}
 
 
-	if (keys[GLFW_KEY_G])
-	{
-		if (guardoArchivo < 1) {
-			guardoArchivo++;
-			GuardarKeyframesMetaKnight(KeyFrame, FrameIndex, "keyframes_guardados.txt");
-			printf("Keyframes agregados al archivo. Presiona P para poder guardar nuevamente.\n");
-			
-		}
-			
-	}
-
+	
 	if (keys[GLFW_KEY_P] )
 	{
 		if (reinicioFrame < 1)
@@ -2829,7 +2822,7 @@ void inputKeyframes(bool* keys)
 			resetElements(); // opcional
 
 			// Primera interpolación específica para Meta Knight
-			interpolationMetaKnight(playIndexMK);  // <-- cambia esto
+			interpolationMetaKnight(playIndexMK);  
 
 			playMetaKnight = true;
 			playIndexMK = 0;
@@ -2899,7 +2892,7 @@ void inputKeyframes(bool* keys)
 		if (caminando)
 		{
 			
-			float factorAnim = velocidadWaddle * 60.0f;
+			float factorAnim = velocidadWaddle * 0.3f;
 
 			// Brazos
 			if (sentidoBrazo)
@@ -2919,26 +2912,26 @@ void inputKeyframes(bool* keys)
 			if (sentidoPierna)
 			{
 				anguloPiernas += factorAnim * deltaTime;
-				if (anguloPiernas > 90.0f)
+				if (anguloPiernas > 45.0f)
 					sentidoPierna = false;
 			}
 			else
 			{
 				anguloPiernas -= factorAnim * deltaTime;
-				if (anguloPiernas < -90.0f)
+				if (anguloPiernas < -45.0f)
 					sentidoPierna = true;
 			}
 
 			// Inclinación del cuerpo en Z (de -20° a +20°)
 			if (sentidoCuerpo)
 			{
-				inclinacionCuerpoZ += (velocidadWaddle * 40.0f) * deltaTime;
+				inclinacionCuerpoZ += (factorAnim * velocidadWaddle * 40.0f) * deltaTime;
 				if (inclinacionCuerpoZ > 45.0f)
 					sentidoCuerpo = false;
 			}
 			else
 			{
-				inclinacionCuerpoZ -= (velocidadWaddle * 40.0f) * deltaTime;
+				inclinacionCuerpoZ -= (factorAnim * 40.0f) * deltaTime;
 				if (inclinacionCuerpoZ < -45.0f)
 					sentidoCuerpo = true;
 			}
@@ -2964,20 +2957,20 @@ void inputKeyframes(bool* keys)
 
 		if (camaraAereaActiva)
 		{
-			camera.setCameraPosition(glm::vec3(0.0f, 100.0f, 0.0f));
+			camera.setCameraPosition(glm::vec3(0.0f,400.0f, 0.0f));
 			camera.setYaw(-90.0f);
 			camera.setPitch(-60.0f);
 
-			printf("Cámara aérea ACTIVADA\n");
+			
 		}
 		else
 		{
 			// Cuando se desactiva, colocar la cámara libre en otra posición
-			camera.setCameraPosition(glm::vec3(0.0f, 50.0f, 50.0f)); // posición deseada
+			camera.setCameraPosition(glm::vec3(0.0f, 100.0f, 50.0f)); // posición deseada
 			camera.setYaw(-6.0f);   // yaw original de la cámara libre
 			camera.setPitch(0.0f);  // pitch original de la cámara libre
 
-			printf("Cámara libre ACTIVADA\n");
+
 		}
 	}
 
@@ -2995,7 +2988,7 @@ void inputKeyframes(bool* keys)
 		if (keys[GLFW_KEY_E]) pos.y -= delta;
 
 		if (pos.y < 10.0f) pos.y = 10.0f;
-		if (pos.y > 200.0f) pos.y = 200.0f;
+		if (pos.y > 10000.f) pos.y = 10000.0f;
 
 		camera.setCameraPosition(pos);
 
