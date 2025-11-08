@@ -128,7 +128,6 @@ GLfloat Window::getYChange()
 
 
 
-
 void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, int mode)
 {
 	Window* theWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));

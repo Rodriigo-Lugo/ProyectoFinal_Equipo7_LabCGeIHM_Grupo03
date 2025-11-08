@@ -39,6 +39,7 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 	{
 		position += right * velocity;
 	}
+
 }
 
 void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
@@ -85,6 +86,47 @@ void Camera::update()
 	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 	front = glm::normalize(front);
 
+	right = glm::normalize(glm::cross(front, worldUp));
+	up = glm::normalize(glm::cross(right, front));
+}
+
+void Camera::setCameraPosition(const glm::vec3& newPosition)
+{
+	position = newPosition;
+	update();  
+}
+
+
+void Camera::setYaw(GLfloat newYaw)
+{
+	yaw = newYaw;
+	update();
+}
+
+void Camera::setPitch(GLfloat newPitch)
+{
+	pitch = newPitch;
+	update();
+}
+
+void Camera::followTargetThirdPerson(const glm::vec3& targetPosition, float targetYawDegrees,
+	float distance, float height,
+	float smoothFactor, float deltaTime)
+{
+	float yawRad = glm::radians(targetYawDegrees);
+
+	glm::vec3 desiredOffset;
+	desiredOffset.x = -sin(yawRad) * distance;
+	desiredOffset.y = height;
+	desiredOffset.z = -cos(yawRad) * distance;
+
+	glm::vec3 desiredPosition = targetPosition + desiredOffset;
+
+	float factor = 1.0f - expf(-smoothFactor * deltaTime);
+	position = glm::mix(position, desiredPosition, factor);
+
+	glm::vec3 targetLookAt = targetPosition + glm::vec3(0.0f, 2.0f, 0.0f);
+	front = glm::normalize(targetLookAt - position);
 	right = glm::normalize(glm::cross(front, worldUp));
 	up = glm::normalize(glm::cross(right, front));
 }
