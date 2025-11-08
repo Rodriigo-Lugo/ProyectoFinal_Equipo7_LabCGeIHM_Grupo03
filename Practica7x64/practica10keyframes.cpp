@@ -95,6 +95,29 @@ std::vector<Shader> shaderList;
 
 Camera camera;
 
+//Camara Aerea
+bool camaraAereaActiva = false;
+
+//Camra Waddle
+bool camaraTerceraPersonaActiva = false;
+glm::vec3 posicionWaddle = glm::vec3(30.0f, 1.5f, 10.0f);
+float rotacionWaddle = 0.0f;
+float velocidadWaddle = 0.1f;
+float anguloPiernas = 0.0f;
+bool caminando = false;
+float velocidadGiro = 10.0f;    
+float escalaWaddle = 0.5f;
+
+
+
+
+// ----- Animaciones -----
+float anguloBrazos = 0.0f;
+bool sentidoBrazo = true;
+
+float inclinacionCuerpoZ = 0.0f;
+bool sentidoCuerpo = true;
+bool sentidoPierna = true;
 
 Texture plainTexture;
 Texture pisoTexture;
@@ -155,6 +178,40 @@ Model BrazoWaddleD_M;
 Model BrazoWaddleI_M;
 Model PiernaWaddleD_M;
 Model PiernaWaddleI_M;
+
+
+//Escenario
+Model Ring_M;
+Model CentroPokemon_M;
+Model Arbol_M;
+Model EntradaPrehispanica_M;
+Model MuroPrehispanico_M;
+Model MuroPrehispanico2_M;
+Model Pikachu_M;
+Model Kirby_M;
+
+Model Lampara_M;
+Model PokeLampara_M;
+Model Anotorcha_M;
+Model Litwick_M;
+
+Model Tribuna_M;
+Model VigasLuz_M;
+Model BolaLuz_M;
+Model Anuncio_M;
+Model Camino_M;
+
+Model Policia_M;
+
+Model BoteBasuraVacio_M;
+Model ContenedoresEcologicos_M;
+Model MesaSombrilla_M;
+Model Banca_M;
+Model Estatuas_M;
+
+Model PuestoTacos_M;
+Model PuestoPapas_M;
+Model Trailer_M;
 
 
 Skybox skybox;
@@ -875,6 +932,7 @@ int main()
 
 	camera = Camera(glm::vec3(0.0f, -0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -6.0f, 0.0f, 0.5f, 0.5f);
 
+	
 	plainTexture = Texture("Textures/plain.png");
 	plainTexture.LoadTextureA();
 	pisoTexture = Texture("Textures/piso.tga");
@@ -986,18 +1044,63 @@ int main()
 	Blackhawk_M.LoadModel("Models/nave.fbx");
 
 
-	/*
-	std::vector<std::string> skyboxFaces;
-	skyboxFaces.push_back("Textures/Skybox/central2.png");
-	skyboxFaces.push_back("Textures/Skybox/izquierda.png");
-	skyboxFaces.push_back("Textures/Skybox/abajo.png");
-	skyboxFaces.push_back("Textures/Skybox/arriba.png");
-	skyboxFaces.push_back("Textures/Skybox/central1.png");
-	skyboxFaces.push_back("Textures/Skybox/derecha.png");
+	//==========================SEGUNDA PARTE==========================================
+	//Escenario
+	Ring_M = Model();
+	Ring_M.LoadModel("Models/RingCompleto.fbx");
+	CentroPokemon_M = Model();
+	CentroPokemon_M.LoadModel("Models/centropokemon.fbx");
+	Arbol_M = Model();
+	Arbol_M.LoadModel("Models/Whispy.fbx");
+	EntradaPrehispanica_M = Model();
+	EntradaPrehispanica_M.LoadModel("Models/EntradaPrehispanica.fbx");
+	MuroPrehispanico_M = Model();
+	MuroPrehispanico_M.LoadModel("Models/MuroPrehispanico.fbx");
+	MuroPrehispanico2_M = Model();
+	MuroPrehispanico2_M.LoadModel("Models/MuroPrehispanico2.fbx");
+	Pikachu_M = Model();
+	Pikachu_M.LoadModel("Models/Pikachu.fbx");
+	Kirby_M = Model();
+	Kirby_M.LoadModel("Models/kirby.fbx");
+	Lampara_M = Model();
+	Lampara_M.LoadModel("Models/lampara.fbx");
+	PokeLampara_M = Model();
+	PokeLampara_M.LoadModel("Models/LamparaPokemon.fbx");
+	Tribuna_M = Model();
+	Tribuna_M.LoadModel("Models/Tribuna.fbx");
+	Anotorcha_M = Model();
+	Anotorcha_M.LoadModel("Models/Antorcha.fbx");
+	Lampara_M = Model();
+	Lampara_M.LoadModel("Models/lampara.fbx");
+	Litwick_M = Model();
+	Litwick_M.LoadModel("Models/litwick.fbx");
+	VigasLuz_M = Model();
+	VigasLuz_M.LoadModel("Models/VigasLuz.fbx");
+	BolaLuz_M = Model();
+	BolaLuz_M.LoadModel("Models/BolaLuz.fbx");
+	Anuncio_M = Model();
+	Anuncio_M.LoadModel("Models/anuncio.fbx");
+	Camino_M = Model();
+	Camino_M.LoadModel("Models/Camino.fbx");
+	Policia_M = Model();
+	Policia_M.LoadModel("Models/Policia.fbx");
+	BoteBasuraVacio_M = Model();
+	BoteBasuraVacio_M.LoadModel("Models/BoteBasuraVacio.fbx");
+	ContenedoresEcologicos_M = Model();
+	ContenedoresEcologicos_M.LoadModel("Models/ContenedoresEcologicos.fbx");
+	MesaSombrilla_M = Model();
+	MesaSombrilla_M.LoadModel("Models/MesaSombrilla.fbx");
+	Banca_M = Model();
+	Banca_M.LoadModel("Models/Banca.fbx");
+	PuestoTacos_M = Model();
+	PuestoTacos_M.LoadModel("Models/PuestoTacos.fbx");
+	PuestoPapas_M = Model();
+	PuestoPapas_M.LoadModel("Models/PuestoPapas.fbx");
+	Estatuas_M = Model();
+	Estatuas_M.LoadModel("Models/estatua.fbx");
+	Trailer_M = Model();
+	Trailer_M.LoadModel("Models/Trailer.fbx");
 
-
-	skybox = Skybox(skyboxFaces);
-	*/
 
 	// Skybox 1
 	std::vector<std::string> skyboxFaces1;
@@ -1370,19 +1473,21 @@ int main()
 	
 
 
-		printf("\nTeclas para uso de Keyframes:\n1.-Presionar barra espaciadora par¿a reproducir animacion.\n2.-Presionar 0 para volver a habilitar reproduccion de la animacion\n");
-		printf("3.-Presiona L para guardar frame\n4.-Presiona P para habilitar guardar nuevo frame\n5.-Presiona 1 para mover en X\n6.-Presiona 2 para habilitar mover en X\n");
-		printf("7.-Presiona G para guardar en el archivo\n8.-Presiona 3 para mover en-x\n9.-Presiona 4 para volver a habilitar mover en -x\n10.-Presiona 5 para mover en y\n");
-		printf("11.-Presiona 6 para habilitar volver a mover en y \n12.-Presiona 7  para mover en -y\n13.-Presiona 8 para volver a habilitar mover en -y\n");
+		printf("\nTeclas para uso de Keyframes:\n1.-Presionar barra espaciadora para reproducir animacion snorlax.\n2.-Presionar 0 para volver a habilitar reproduccion de la animacion nave y snorlax\n");
+		printf("3.-Presiona L para guardar frame\n4.-Presiona P para habilitar guardar nuevo frame\n5.-Presiona 1 para cambiar a camara weedle dee\n6.-Presiona 2 para cambiar a camara aerea\n");
+		printf("7.-Presiona C para cargar animacion keyframe MetaKnight \n8.-Presiona V para habilitar volver a cargar \n9.-Presiona F para abrir y cerrar pokebola\n10.-Presiona h para mover coche y regresa\n");
+		printf("11.-Presiona J para hacer volar a magollor \n12.-Presiona 7  para mover en -y\n13.-Presiona 8 para volver a habilitar mover en -y\n");
 		printf("14.-Presiona M ver una nave girar \n15.-Presiona N para habilitar la rotación \n16-. Presionar C para Cargar txt pasado \n17-. Presionar V para habilitar Cargar txt pasado  ");
 
 
 
 		glm::mat4 model(1.0);
 		glm::mat4 modelaux(1.0);
+		glm::mat4 modelaux2(1.0);
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glm::vec2 toffset = glm::vec2(0.0f, 0.0f);
 		glm::vec3 lowerLight = glm::vec3(0.0f,0.0f,0.0f);
+
 	////Loop mientras no se cierra la ventana
 		while (!mainWindow.getShouldClose())
 		{
@@ -1440,10 +1545,37 @@ int main()
 			camera.keyControl(mainWindow.getsKeys(), deltaTime);
 			camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
 
+
+
+			glm::mat4 view;
+
+			if (camaraTerceraPersonaActiva)
+			{
+				camera.followTargetThirdPerson(posicionWaddle, rotacionWaddle, 8.0f, 4.0f, 10.0f, deltaTime);
+				view = camera.calculateViewMatrix();
+			}
+			else if (camaraAereaActiva)
+			{
+				view = camera.calculateViewMatrix(); // solo aquí se usa camaraAerea
+			}
+			else
+			{
+				camera.keyControl(mainWindow.getsKeys(), deltaTime);
+				camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
+				view = camera.calculateViewMatrix();
+			}
+
+			glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(view));
+
+
+
 			//-------Para Keyframes
 			inputKeyframes(mainWindow.getsKeys());
 			animate();
 			animateMetaKnight();
+
+
+
 
 			// Clear the window
 			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -1870,52 +2002,718 @@ int main()
 
 
 			//Waddle Dee
-
+			
 			// ----- WADDLE DEE -----
 			glm::mat4 modelWaddle = glm::mat4(1.0f);
-			modelWaddle = glm::translate(modelWaddle, glm::vec3(10.0f, 10.0f, 10.0f)); // posición general
-			modelWaddle = glm::scale(modelWaddle, glm::vec3(1.0f, 1.0f, 1.0f)); // escala general del modelo
+			modelWaddle = glm::translate(modelWaddle, posicionWaddle);
+			modelWaddle = glm::rotate(modelWaddle, glm::radians(rotacionWaddle), glm::vec3(0.0f, 1.0f, 0.0f));
+			modelWaddle = glm::rotate(modelWaddle, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+			modelWaddle = glm::rotate(modelWaddle, glm::radians(inclinacionCuerpoZ), glm::vec3(0.0f, 0.0f, 1.0f)); // 🔹 oscilación
+			modelWaddle = glm::scale(modelWaddle, glm::vec3(escalaWaddle));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelWaddle));
-			Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 			CuerpoWaddle_M.RenderModel();
 
 			// ----- Brazo Derecho -----
 			glm::mat4 modelBrazoDerechoWaddle = modelWaddle;
-			modelBrazoDerechoWaddle = glm::translate(modelBrazoDerechoWaddle, glm::vec3(-4.0f, 2.0f, 0.0f)); // posición relativa
-			//modelBrazoDerechoWaddle = glm::rotate(modelBrazoDerechoWaddle, glm::radians(giroBrazoDWaddleX), glm::vec3(1.0f, 0.0f, 0.0f));
-			//modelBrazoDerechoWaddle = glm::rotate(modelBrazoDerechoWaddle, glm::radians(giroBrazoDWaddleZ), glm::vec3(0.0f, 0.0f, 1.0f));
+			modelBrazoDerechoWaddle = glm::translate(modelBrazoDerechoWaddle, glm::vec3(-1.2f, 0.0f, 0.0f));
+			modelBrazoDerechoWaddle = glm::rotate(modelBrazoDerechoWaddle, glm::radians(anguloBrazos), glm::vec3(1.0f, 0.0f, 0.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelBrazoDerechoWaddle));
 			Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 			BrazoWaddleD_M.RenderModel();
 
 			// ----- Brazo Izquierdo -----
 			glm::mat4 modelBrazoIzquierdoWaddle = modelWaddle;
-			modelBrazoIzquierdoWaddle = glm::translate(modelBrazoIzquierdoWaddle, glm::vec3(4.0f, 2.0f, 0.0f));
-			//modelBrazoIzquierdoWaddle = glm::rotate(modelBrazoIzquierdoWaddle, glm::radians(giroBrazoIWaddleX), glm::vec3(1.0f, 0.0f, 0.0f));
-			//modelBrazoIzquierdoWaddle = glm::rotate(modelBrazoIzquierdoWaddle, glm::radians(giroBrazoIWaddleZ), glm::vec3(0.0f, 0.0f, 1.0f));
+			modelBrazoIzquierdoWaddle = glm::translate(modelBrazoIzquierdoWaddle, glm::vec3(1.2f, 0.0f, 0.0f));
+			modelBrazoIzquierdoWaddle = glm::rotate(modelBrazoIzquierdoWaddle, glm::radians(-anguloBrazos), glm::vec3(1.0f, 0.0f, 0.0f));
 			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelBrazoIzquierdoWaddle));
 			Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 			BrazoWaddleI_M.RenderModel();
 
 			// ----- Pierna Derecha -----
-			glm::mat4 modelPiernaDerechaWaddle = modelWaddle;
-			modelPiernaDerechaWaddle = glm::translate(modelPiernaDerechaWaddle, glm::vec3(-2.0f, -3.0f, 0.0f));
-			//modelPiernaDerechaWaddle = glm::rotate(modelPiernaDerechaWaddle, glm::radians(giroPiernaDWaddleX), glm::vec3(1.0f, 0.0f, 0.0f));
-			//modelPiernaDerechaWaddle = glm::rotate(modelPiernaDerechaWaddle, glm::radians(giroPiernaDWaddleZ), glm::vec3(0.0f, 0.0f, 1.0f));
-			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelPiernaDerechaWaddle));
-			Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+			glm::mat4 piernaD = modelWaddle;
+			piernaD = glm::translate(piernaD, glm::vec3(-0.5f, 0.0f, -1.0f));
+			piernaD = glm::rotate(piernaD, glm::radians(anguloPiernas), glm::vec3(1.0f, 0.0f, 0.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(piernaD));
 			PiernaWaddleD_M.RenderModel();
 
 			// ----- Pierna Izquierda -----
-			glm::mat4 modelPiernaIzquierdaWaddle = modelWaddle;
-			modelPiernaIzquierdaWaddle = glm::translate(modelPiernaIzquierdaWaddle, glm::vec3(2.0f, -3.0f, 0.0f));
-			//modelPiernaIzquierdaWaddle = glm::rotate(modelPiernaIzquierdaWaddle, glm::radians(giroPiernaIWaddleX), glm::vec3(1.0f, 0.0f, 0.0f));
-			//modelPiernaIzquierdaWaddle = glm::rotate(modelPiernaIzquierdaWaddle, glm::radians(giroPiernaIWaddleZ), glm::vec3(0.0f, 0.0f, 1.0f));
-			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelPiernaIzquierdaWaddle));
-			Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+			glm::mat4 piernaI = modelWaddle;
+			piernaI = glm::translate(piernaI, glm::vec3(0.5f, 0.0f, -1.0f));
+			piernaI = glm::rotate(piernaI, glm::radians(-anguloPiernas), glm::vec3(1.0f, 0.0f, 0.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(piernaI));
 			PiernaWaddleI_M.RenderModel();
 
+			//===============================================ESCENARIO=================================================
+//----- RING -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(100.0f, 0.01f, 0.0f));
+			model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Ring_M.RenderModel();
 
+
+			//----- ARBOL -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-135.0f, 0.01f, 140.0f));
+			model = glm::scale(model, glm::vec3(6.0f, 6.0f, 6.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, -225 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Arbol_M.RenderModel();
+
+			//----- CENTRO POKEMON -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-115.0f, 0.01f, -130.0f));
+			model = glm::scale(model, glm::vec3(3.5f, 3.5f, 3.5f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, 45 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			CentroPokemon_M.RenderModel();
+
+			//-----ENTRADA PREHISPANICA -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-180.0f, 0.01f, 0.0f));
+			model = glm::scale(model, glm::vec3(0.7f, 0.7f, 0.7f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			//model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			EntradaPrehispanica_M.RenderModel();
+
+
+			//----- PIKACHU -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(105.0f, 15.0f, 5.0f));
+			model = glm::scale(model, glm::vec3(1.2f, 1.2f, 1.2f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, -225 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Pikachu_M.RenderModel();
+
+
+			//----- KIRBY -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(85.0f, 20.0f, -15.0f));
+			model = glm::scale(model, glm::vec3(9.0f, 9.0f, 9.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, -45 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Kirby_M.RenderModel();
+
+
+			//----- TRIBUNA -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(150.0f, 0.01f, 0.0f));
+			model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Tribuna_M.RenderModel();
+
+
+			//----- ANTORCHA -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(20.0f, 0.01f, 100.0f));
+			model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			//model = glm::rotate(model, -45 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Anotorcha_M.RenderModel();
+
+
+			//----- LITWICK -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-60.0f, 0.01f, -60.0f));
+			model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.4f));
+			model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); //(x,z,-y)
+			//model = glm::rotate(model, -45 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Litwick_M.RenderModel();
+
+			//----- VIGAS LUZ -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(100.0f, 0.01f, 0.0f));
+			model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			modelaux = model;
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			VigasLuz_M.RenderModel();
+
+			//----- BOLA LUZ ----- JERARQUIA
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 10.8f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			BolaLuz_M.RenderModel();
+
+			//---- ANUNCIO PELEA -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(130.0f, 0.01f, 140.0f));
+			model = glm::scale(model, glm::vec3(30.0f, 30.0f, 30.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, 45 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Anuncio_M.RenderModel();
+
+			//----- TRAILER -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(90.0f, 0.01f, -140.0f));
+			model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			//model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Trailer_M.RenderModel();
+
+
+			//----- POLICIA -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-130.0f, 0.01f, 20.0f));
+			model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+			model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(x,z,-y)
+			//model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Policia_M.RenderModel();
+
+			//----- BOTE BASURA VACIO -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(30.0f, 0.01f, -18.0f));
+			model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			//model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			BoteBasuraVacio_M.RenderModel();
+
+
+			//----- CONTENEDORES ECOLOGICOS -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(30.0f, 0.01f, 20.0f));
+			model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			ContenedoresEcologicos_M.RenderModel();
+
+			//----- MESA SOMBRILLA 1 -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(0.0f, 0.01f, 50.0f));
+			model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			//model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MesaSombrilla_M.RenderModel();
+
+			//----- MESA SOMBRILLA 1 -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-60.0f, 0.01f, 50.0f));
+			model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			//model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MesaSombrilla_M.RenderModel();
+
+			//----- MESA SOMBRILLA 2 -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-120.0f, 0.01f, 50.0f));
+			model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			//model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MesaSombrilla_M.RenderModel();
+
+			//----- MESA SOMBRILLA 4 -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(0.0f, 0.01f, -60.0f));
+			model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			//model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MesaSombrilla_M.RenderModel();
+
+			//----- MESA SOMBRILLA 5 -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-120.0f, 0.01f, -60.0f));
+			model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			//model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MesaSombrilla_M.RenderModel();
+
+			//----- MESA SOMBRILLA 6 -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(0.0f, 0.01f, -140.0f));
+			model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			//model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MesaSombrilla_M.RenderModel();
+
+			//----- LAMPARA POKEMON -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(30.0f, 0.01f, -100.0f));
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			PokeLampara_M.RenderModel();
+
+			//----- ESTATUAS -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-60.0f, 0.01f, 150.0f));
+			model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, -180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Estatuas_M.RenderModel();
+
+			//----- LAMPARA -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-60.0f, 0.01f, 20.0f));
+			model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			//model = glm::rotate(model, -45 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Lampara_M.RenderModel();
+
+			//----- BANCA -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-140.0f, 0.01f, -25.0f));
+			model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Banca_M.RenderModel();
+
+			//----- BANCA -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-105.0f, 0.01f, -25.0f));
+			model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Banca_M.RenderModel();
+
+			//----- BANCA -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-70.0f, 0.01f, -25.0f));
+			model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Banca_M.RenderModel();
+
+			//----- BANCA -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-35.0f, 0.01f, -25.0f));
+			model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Banca_M.RenderModel();
+
+			//----- BANCA -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(0.0f, 0.01f, -25.0f));
+			model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Banca_M.RenderModel();
+
+
+			//----- Puesto Tacos -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(70.0f, 0.01f, 130.0f));
+			model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			model = glm::rotate(model, -225 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			PuestoTacos_M.RenderModel();
+
+			//----- Puesto Papas -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-40.0f, 0.01f, -140.0f));
+			model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			//model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			PuestoPapas_M.RenderModel();
+
+
+			/*
+			//---- CAMINO -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(250.0f, 0.2f, 0.3f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); //(z,y,x)
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(0.094f, 0.094f, 0.094f));
+			//model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Camino_M.RenderModel();*/
+
+
+
+
+
+
+			//---- MUROS 1 CON JERARQUIA -----
+			//-----MURO PREHISPANIC0 ----- 
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-180.0f, 0.01f, 65.0f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			//model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();
+
+			//----- muro 2 -----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();
+
+			/*
+			//----- muro 3 -----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel(); */
+
+			//----- muro 4 puede que se quite-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();
+
+			//----- muro 5 vuelta -----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(25.0f, -26.0f, 0.0f));
+			model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();
+
+			//----- muro 6-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();
+
+			//----- muro 7-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();
+			/*
+			//----- muro 8-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();*/
+
+			//----- muro 9-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();
+
+			//----- muro 10-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();
+
+			//----- muro 11-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();
+
+			//----- muro 12-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();
+
+			//----- muro 13 vuelta -----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(25.0f, -26.0f, 0.0f));
+			model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();
+
+			//----- muro 14-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();
+			/*
+			//----- muro 15-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();
+
+			//----- muro 16-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();*/
+
+
+			//---- MUROS 2 CON JERARQUIA -----
+			//-----MURO PREHISPANIC0 ----- 
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-180.0f, 0.01f, -65.5f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f)); //(x,z,-y)
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			//model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico2_M.RenderModel();
+
+			//----- muro 2-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico2_M.RenderModel();
+			/*
+			//----- muro 3-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico2_M.RenderModel();*/
+
+			//----- muro 4 puede que se quite -----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico2_M.RenderModel();
+
+			//----- muro 5 vuelta -----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(25.0f, 25.5f, 0.0f));
+			model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();
+
+			//----- muro 6-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
+			model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico2_M.RenderModel();
+			/*
+			//----- muro 7-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico2_M.RenderModel();*/
+
+			//----- muro 8-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico2_M.RenderModel();
+
+			//----- muro 9-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico2_M.RenderModel();
+
+			//----- muro 10-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico2_M.RenderModel();
+
+			//----- muro 11-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico2_M.RenderModel();
+
+			//----- muro 12-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico2_M.RenderModel();
+
+			//----- muro 13 vuelta -----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(25.0f, 25.5f, 0.0f));
+			model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico_M.RenderModel();
+
+			//----- muro 14-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, -51.75f, 0.0f));
+			model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico2_M.RenderModel();
+			/*
+			//----- muro 15-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico2_M.RenderModel();
+
+			//----- muro 16-----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 51.75f, 0.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			MuroPrehispanico2_M.RenderModel();*/
+
+
+
+
+
+
+
+
+
+
+
+			//---- CAMINO -----
+			model = glm::mat4(1.0);
+			model = glm::translate(model, glm::vec3(-170.0f, 0.2f, 0.3f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); //(z,y,x)
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(0.094f, 0.094f, 0.094f));
+			//model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f)); //(z,x, y)
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Camino_M.RenderModel();
+
+			//---- camino 2 -----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -51.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(0.094f, 0.094f, 0.094f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Camino_M.RenderModel();
+
+			//---- camino 3 -----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -51.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(0.094f, 0.094f, 0.094f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Camino_M.RenderModel();
+
+			//---- camino 4 -----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -51.0f));
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(0.094f, 0.094f, 0.094f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Camino_M.RenderModel();
+
+			//---- camino 5 -----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -51.0f));
+			modelaux = model;
+			modelaux2 = model;
+			model = glm::scale(model, glm::vec3(0.094f, 0.094f, 0.094f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Camino_M.RenderModel();
+
+			//---- camino 6.1 -----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(42.3f, 0.0f, -12.5f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); //(x,z,-y)
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(0.094f, 0.094f, 0.11f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Camino_M.RenderModel();
+
+			//---- camino 7.1 -----
+			model = modelaux;
+			model = glm::translate(model, glm::vec3(-51.4f, 0.0f, -17.4f));
+			model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); //(x,z,-y)
+			modelaux = model;
+			model = glm::scale(model, glm::vec3(0.094f, 0.094f, 0.14f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Camino_M.RenderModel();
+
+			//---- camino 6.2 -----
+			model = modelaux2;
+			model = glm::translate(model, glm::vec3(-40.3f, 0.0f, -12.5f));
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); //(x,z,-y)
+			modelaux2 = model;
+			model = glm::scale(model, glm::vec3(0.094f, 0.094f, 0.11f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Camino_M.RenderModel();
+
+			//---- camino 7.2 -----
+			model = modelaux2;
+			model = glm::translate(model, glm::vec3(-51.4f, 0.0f, 19.4f));
+			model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); //(x,z,-y)
+			modelaux2 = model;
+			model = glm::scale(model, glm::vec3(0.094f, 0.094f, 0.14f));
+			glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+			Camino_M.RenderModel();
 
 			glUseProgram(0);
 
@@ -2040,16 +2838,6 @@ void inputKeyframes(bool* keys)
 	}
 
 
-	if (keys[GLFW_KEY_N])
-	{
-		if (ciclo9 < 1)
-		{
-			ciclo8 = 0;
-			ciclo9++;
-			printf("Ya puedes volver a rotar el avión con la tecla M.\n");
-		}
-	}
-
 
 	if (keys[GLFW_KEY_F] && GLFW_PRESS)
 	{
@@ -2070,95 +2858,151 @@ void inputKeyframes(bool* keys)
 	}
 
 	
-	// --- MOVIMIENTO EN +X ---	
-	if (keys[GLFW_KEY_1])
+	// --- Camara avatar ---
+	if (keys[GLFW_KEY_1] )
 	{
-		if (ciclo < 1)
-		{
-			//printf("movAvion_x es: %f\n", movAvion_x);
-			movAvion_x += 1.0f;
-			printf("\n movAvion_x es: %f\n", movAvion_x);
-			ciclo++;
-			ciclo2 = 0;
-			printf("\n Presiona la tecla 2 para poder habilitar la variable\n");
-		}
+		camaraTerceraPersonaActiva = !camaraTerceraPersonaActiva;
+		camaraAereaActiva = false;
 
-	}
-	if (keys[GLFW_KEY_2])
-	{
-		if (ciclo2 < 1)
-		{
-			ciclo = 0;
-			ciclo2++;
-			printf("\n Ya puedes modificar tu variable presionando la tecla 1\n");
-		}
+		if (camaraTerceraPersonaActiva)
+			printf("Cámara en tercera persona ACTIVADA\n");
+		else
+			printf("Cámara libre ACTIVADA\n");
 	}
 
-	// --- MOVIMIENTO EN -X ---
-	if (keys[GLFW_KEY_3])
+	if (camaraTerceraPersonaActiva)
 	{
-		if (ciclo3 < 1)
+		float delta = deltaTime * velocidadWaddle;
+		bool caminando = false;
+
+		// ----- Movimiento -----
+		if (keys[GLFW_KEY_W])
 		{
-			movAvion_x -= 1.0f;
-			printf("\n movAvion_x es: %f\n", movAvion_x);
-			ciclo3++;
-			ciclo4 = 0;
-			printf("Presiona la tecla 4 para habilitar de nuevo el cambio en X (-)\n");
+			posicionWaddle.x += sin(glm::radians(rotacionWaddle)) * delta;
+			posicionWaddle.z += cos(glm::radians(rotacionWaddle)) * delta;
+			caminando = true;
+		}
+		if (keys[GLFW_KEY_S])
+		{
+			posicionWaddle.x -= sin(glm::radians(rotacionWaddle)) * delta;
+			posicionWaddle.z -= cos(glm::radians(rotacionWaddle)) * delta;
+			caminando = true;
+		}
+
+		// ----- Giro suave -----
+		if (keys[GLFW_KEY_A])
+			rotacionWaddle += velocidadGiro * deltaTime;
+		if (keys[GLFW_KEY_D])
+			rotacionWaddle -= velocidadGiro * deltaTime;
+
+		// ====== Animación del cuerpo ======
+		if (caminando)
+		{
+			
+			float factorAnim = velocidadWaddle * 60.0f;
+
+			// Brazos
+			if (sentidoBrazo)
+			{
+				anguloBrazos += factorAnim * deltaTime;
+				if (anguloBrazos > 45.0f)
+					sentidoBrazo = false;
+			}
+			else
+			{
+				anguloBrazos -= factorAnim * deltaTime;
+				if (anguloBrazos < -45.0f)
+					sentidoBrazo = true;
+			}
+
+			// Piernas
+			if (sentidoPierna)
+			{
+				anguloPiernas += factorAnim * deltaTime;
+				if (anguloPiernas > 90.0f)
+					sentidoPierna = false;
+			}
+			else
+			{
+				anguloPiernas -= factorAnim * deltaTime;
+				if (anguloPiernas < -90.0f)
+					sentidoPierna = true;
+			}
+
+			// Inclinación del cuerpo en Z (de -20° a +20°)
+			if (sentidoCuerpo)
+			{
+				inclinacionCuerpoZ += (velocidadWaddle * 40.0f) * deltaTime;
+				if (inclinacionCuerpoZ > 45.0f)
+					sentidoCuerpo = false;
+			}
+			else
+			{
+				inclinacionCuerpoZ -= (velocidadWaddle * 40.0f) * deltaTime;
+				if (inclinacionCuerpoZ < -45.0f)
+					sentidoCuerpo = true;
+			}
+		}
+		else
+		{
+			// Regresa a posición neutral
+			anguloBrazos *= 0.9f;
+			anguloPiernas *= 0.9f;
+			inclinacionCuerpoZ *= 0.9f;
 		}
 	}
 
-	if (keys[GLFW_KEY_4])
+
+
+
+	// --- Cámara aérea ---
+
+	if (keys[GLFW_KEY_2] && GLFW_PRESS )
 	{
-		if (ciclo4 < 1)
+		camaraAereaActiva = !camaraAereaActiva;
+		camaraTerceraPersonaActiva = false;
+
+		if (camaraAereaActiva)
 		{
-			ciclo3 = 0;
-			ciclo4++;
-			printf("Ya puedes volver a modificar -X (tecla 3)\n");
+			camera.setCameraPosition(glm::vec3(0.0f, 100.0f, 0.0f));
+			camera.setYaw(-90.0f);
+			camera.setPitch(-60.0f);
+
+			printf("Cámara aérea ACTIVADA\n");
+		}
+		else
+		{
+			// Cuando se desactiva, colocar la cámara libre en otra posición
+			camera.setCameraPosition(glm::vec3(0.0f, 50.0f, 50.0f)); // posición deseada
+			camera.setYaw(-6.0f);   // yaw original de la cámara libre
+			camera.setPitch(0.0f);  // pitch original de la cámara libre
+
+			printf("Cámara libre ACTIVADA\n");
 		}
 	}
 
-	// --- MOVIMIENTO EN +Y ---
-	if (keys[GLFW_KEY_5])
+
+	if (camaraAereaActiva)
 	{
-		if (ciclo5 < 1)
-		{
-			movAvion_y += 1.0f;
-			printf("\n movAvion_y es: %f\n", movAvion_y);
-			ciclo5++;
-			ciclo6 = 0;
-			printf("Presiona la tecla 6 para habilitar de nuevo el cambio en Y (+)\n");
-		}
+		float delta = deltaTime * 3.0f;
+		glm::vec3 pos = camera.getCameraPosition();
+
+		if (keys[GLFW_KEY_W]) pos.z -= delta;
+		if (keys[GLFW_KEY_S]) pos.z += delta;
+		if (keys[GLFW_KEY_A]) pos.x -= delta;
+		if (keys[GLFW_KEY_D]) pos.x += delta;
+		if (keys[GLFW_KEY_Q]) pos.y += delta;
+		if (keys[GLFW_KEY_E]) pos.y -= delta;
+
+		if (pos.y < 10.0f) pos.y = 10.0f;
+		if (pos.y > 200.0f) pos.y = 200.0f;
+
+		camera.setCameraPosition(pos);
+
+		camera.setYaw(-90.0f);
+		camera.setPitch(-60.0f);
 	}
 
-	if (keys[GLFW_KEY_6])
-	{
-		if (ciclo6 < 1)
-		{
-			ciclo5 = 0;
-			ciclo6++;
-			printf("Ya puedes volver a modificar +Y (tecla 5)\n");
-		}
-	}
 
-	// --- MOVIMIENTO EN -Y ---
-	if (keys[GLFW_KEY_7])
-	{
-		if (ciclo7 < 1)
-		{
-			movAvion_y -= 1.0f;
-			printf("\n movAvion_y es: %f\n", movAvion_y);
-			ciclo7++;
-			printf("Presiona la tecla 8 para habilitar de nuevo el cambio en Y (-)\n");
-		}
-	}
-
-	if (keys[GLFW_KEY_8])
-	{
-		if (ciclo7 > 0)
-		{
-			ciclo7 = 0;
-			printf("Ya puedes volver a modificar -Y (tecla 7)\n");
-		}
-	}
 
 }
