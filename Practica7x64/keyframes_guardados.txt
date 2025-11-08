@@ -1,0 +1,890 @@
+---- NUEVA SESIÓN DE GUARDADO META KNIGHT (9x más grande) ----
+Keyframe 0:
+movMetaKnight_x: 45.0
+movMetaKnight_y: 2.0
+movMetaKnight_z: 0.0
+giroMetaKnight_x: 0.0
+giroMetaKnight_y: 90.0
+giroMetaKnight_z: 0.0
+----------------------------
+Keyframe 1:
+movMetaKnight_x: 36.4057647471
+movMetaKnight_y: 2.0
+movMetaKnight_z: 26.4503363526
+giroMetaKnight_x: 0.0
+giroMetaKnight_y: 54.0
+giroMetaKnight_z: 0.0
+----------------------------
+Keyframe 2:
+movMetaKnight_x: 13.9057647471
+movMetaKnight_y: 2.0
+movMetaKnight_z: 42.7975432335
+giroMetaKnight_x: 0.0
+giroMetaKnight_y: -18.0
+giroMetaKnight_z: 0.0
+----------------------------
+Keyframe 3:
+movMetaKnight_x: -13.9057647471
+movMetaKnight_y: 2.0
+movMetaKnight_z: 42.7975432335
+giroMetaKnight_x: 0.0
+giroMetaKnight_y: 18.0
+giroMetaKnight_z: 0.0
+----------------------------
+Keyframe 4:
+movMetaKnight_x: -36.4057647471
+movMetaKnight_y: 2.0
+movMetaKnight_z: 26.4503363526
+giroMetaKnight_x: 0.0
+giroMetaKnight_y: -54.0
+giroMetaKnight_z: 0.0
+----------------------------
+Keyframe 5:
+movMetaKnight_x: -45.0
+movMetaKnight_y: 2.0
+movMetaKnight_z: 0.0
+giroMetaKnight_x: 0.0
+giroMetaKnight_y: -90.0
+giroMetaKnight_z: 0.0
+----------------------------
+Keyframe 6:
+movMetaKnight_x: -36.4057647471
+movMetaKnight_y: 2.0
+movMetaKnight_z: -26.4503363526
+giroMetaKnight_x: 0.0
+giroMetaKnight_y: -126.0
+giroMetaKnight_z: 0.0
+----------------------------
+Keyframe 7:
+movMetaKnight_x: -13.9057647471
+movMetaKnight_y: 2.0
+movMetaKnight_z: -42.7975432335
+giroMetaKnight_x: 0.0
+giroMetaKnight_y: -162.0
+giroMetaKnight_z: 0.0
+----------------------------
+Keyframe 8:
+movMetaKnight_x: 13.9057647471
+movMetaKnight_y: 2.0
+movMetaKnight_z: -42.7975432335
+giroMetaKnight_x: 0.0
+giroMetaKnight_y: -198.0
+giroMetaKnight_z: 0.0
+----------------------------
+Keyframe 9:
+movMetaKnight_x: 36.4057647471
+movMetaKnight_y: 2.0
+movMetaKnight_z: -26.4503363526
+giroMetaKnight_x: 0.0
+giroMetaKnight_y: -234.0
+giroMetaKnight_z: 0.0
+----------------------------
+Keyframe 10:
+movMetaKnight_x: 45.0
+movMetaKnight_y: 2.0
+movMetaKnight_z: 0.0
+giroMetaKnight_x: 0.0
+giroMetaKnight_y: -234.0
+giroMetaKnight_z: 0.0
+----------------------------
+---- NUEVA SESI�N DE GUARDADO META KNIGHT ----
+Keyframe 0:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 1:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 2:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 3:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 4:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 5:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 6:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 7:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 8:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 9:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 10:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 11:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 12:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 13:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 14:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 15:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 16:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 17:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 18:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 19:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 20:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 21:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 22:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 23:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 24:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 25:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 26:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 27:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 28:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 29:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 30:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 31:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 32:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 33:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 34:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 35:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 36:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 37:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 38:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 39:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 40:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 41:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 42:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 43:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 44:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 45:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 46:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 47:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 48:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 49:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 50:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 51:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 52:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 53:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 54:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 55:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 56:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 57:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 58:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 59:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 60:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 61:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 62:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 63:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 64:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 65:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 66:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 67:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 68:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 69:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 70:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 71:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 72:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 73:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 74:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 75:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 76:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 77:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 78:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 79:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 80:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 81:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 82:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 83:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 84:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 85:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 86:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 87:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 88:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 89:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 90:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 91:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 92:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 93:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 94:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 95:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 96:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 97:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 98:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
+Keyframe 99:
+movMetaKnight_x: 0
+movMetaKnight_y: 0
+movMetaKnight_z: 0
+giroMetaKnight_x: 0
+giroMetaKnight_y: 0
+giroMetaKnight_z: 0
+----------------------------
