@@ -16,9 +16,19 @@ public:
 	void keyControl(bool* keys, GLfloat deltaTime);
 	void mouseControl(GLfloat xChange, GLfloat yChange);
 
+
+	void followTargetThirdPerson(const glm::vec3& targetPosition, float targetYawDegrees,
+		float distance = 8.0f, float height = 4.0f,
+		float smoothFactor = 8.0f, float deltaTime = 0.016f);
+
 	glm::vec3 getCameraPosition();
 	glm::vec3 getCameraDirection();
 	glm::mat4 calculateViewMatrix();
+
+	void setCameraPosition(const glm::vec3& newPosition);
+
+	void setYaw(GLfloat newYaw);
+	void setPitch(GLfloat newPitch);
 
 	~Camera();
 
