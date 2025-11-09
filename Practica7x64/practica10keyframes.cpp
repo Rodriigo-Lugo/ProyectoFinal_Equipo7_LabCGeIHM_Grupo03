@@ -1125,7 +1125,7 @@ int main()
 
 
 	float lastSwitchTime = 0.0f; // Tiempo del último cambio
-	float switchInterval = 90.0f; // Intervalo en segundos
+	float switchInterval = 95.0f; // Intervalo en segundos
 	bool useFirstSkybox = true;  // Flag para saber qué skybox usar
 
 	Material_brillante = Material(4.0f, 256);
