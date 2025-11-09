@@ -8,7 +8,7 @@ float giroZ = 0.0f;  // Ángulo que se aplica solo al presionar G
 float velocidadGiroZ = 25.0f; // grados por segundo
 
 
-  // Ángulo actual de apertura
+// Ángulo actual de apertura
 // Estado de la puerta
 
 
@@ -25,23 +25,8 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 {
 	width = windowWidth;
 	height = windowHeight;
-	muevex = 2.0f;
-	lamparaEncendida = true;
-	puertaAbierta = false;
-	anguloPuertaI = 0.0f;
-	puertaMoviendose = false;
-	puertaDerechaMoviendose = false;
-	puertaDerechaAbierta = false;
-	posPuertaD_X = 1.85f;
-	posPuertaD_Y = -3.1f;
-	posPuertaD_Z = -0.8f;
-
-	giraDado = 0.0f;   // ángulo de giro en grados
-	caeDado = 9.0f; // empieza desde arriba
-	dadoGirando = true;   // gira mientras cae
-	dadoCayendo = true;   // comienza cayendo
-	dadoAterrizado = false;  // aún no tocó el piso
-	dadoNumero = 1;      // número que muestra arriba
+	luzSpotLetrero = GL_TRUE;
+	luzSpotLampara = GL_TRUE;
 
 
 	for (size_t i = 0; i < 1024; i++)
@@ -96,9 +81,9 @@ int Window::Initialise()
 	}
 
 	glEnable(GL_DEPTH_TEST); //HABILITAR BUFFER DE PROFUNDIDAD
-							 // Asignar valores de la ventana y coordenadas
-							 
-							 //Asignar Viewport
+	// Asignar valores de la ventana y coordenadas
+
+	//Asignar Viewport
 	glViewport(0, 0, bufferWidth, bufferHeight);
 	//Callback para detectar que se está usando la ventana
 	glfwSetWindowUserPointer(mainWindow, this);
@@ -138,11 +123,11 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	}
 	if (key == GLFW_KEY_Y)
 	{
-		theWindow-> muevex += 1.0;
+		theWindow->muevex += 1.0;
 	}
 	if (key == GLFW_KEY_U)
 	{
-		theWindow-> muevex -= 1.0;
+		theWindow->muevex -= 1.0;
 	}
 
 	if (key == GLFW_KEY_F)
@@ -163,7 +148,7 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		}
 	}
 
-	
+
 	if (key == GLFW_KEY_G && action == GLFW_PRESS) {
 		if (!theWindow->getDadoCayendo()) {
 			theWindow->setDadoCayendo(true);
@@ -174,6 +159,15 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	}
 
 
+	// Z  spotlight del letrero (spotLights[1])
+	if (key == GLFW_KEY_Z && action == GLFW_PRESS) {
+		theWindow->luzSpotLetrero = !theWindow->luzSpotLetrero;
+	}
+
+	// X spotlight de la lámpara (spotLights[2])
+	if (key == GLFW_KEY_X && action == GLFW_PRESS) {
+		theWindow->luzSpotLampara = !theWindow->luzSpotLampara;
+	}
 
 
 
@@ -185,7 +179,7 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		if (!theWindow->getPuertaDerechaMoviendose()) {
 			theWindow->setPuertaDerechaAbierta(!theWindow->getPuertaDerechaAbierta());
 			theWindow->setPuertaDerechaMoviendose(true); // inicia animación derecha
-			
+
 		}
 	}
 
