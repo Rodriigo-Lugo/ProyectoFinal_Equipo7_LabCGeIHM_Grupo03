@@ -68,15 +68,19 @@ public:
 	int getDadoNumero() const { return dadoNumero; }
 	void setDadoNumero(int num) { dadoNumero = num; }
 
+	//SPOTLIGHTS PROYECTO
+	GLboolean getLuzSpotLetrero() const { return luzSpotLetrero; }
+	GLboolean getLuzSpotLampara() const { return luzSpotLampara; }
+
 
 
 
 
 	~Window();
-private: 
-	GLFWwindow *mainWindow;
+private:
+	GLFWwindow* mainWindow;
 	GLint width, height;
-	GLfloat rotax, rotay, rotaz,articulacion1, articulacion2, articulacion3, articulacion4, articulacion5, articulacion6, Setactual;
+	GLfloat rotax, rotay, rotaz, articulacion1, articulacion2, articulacion3, articulacion4, articulacion5, articulacion6, Setactual;
 	bool keys[1024];
 	bool puertaAbierta;
 	bool puertaMoviendose;
@@ -84,14 +88,19 @@ private:
 	bool puertaDerechaAbierta;
 	float anguloPuertaI;
 	float posPuertaD_X;
-	float posPuertaD_Y ;
+	float posPuertaD_Y;
 	float posPuertaD_Z;
 	float giraDado;      // ángulo de giro en grados
-	float caeDado ;       // desplazamiento vertical
-	bool dadoGirando ;   // indica si el dado está girando
-	bool dadoCayendo ;// indica si el dado está en caída
+	float caeDado;       // desplazamiento vertical
+	bool dadoGirando;   // indica si el dado está girando
+	bool dadoCayendo;// indica si el dado está en caída
 	bool dadoAterrizado;
 	int dadoNumero;
+
+	//SPOTLIGHTS PROYECTO
+	GLboolean luzSpotLetrero = GL_TRUE;  // ON por defecto
+	GLboolean luzSpotLampara = GL_TRUE;  // ON por defecto
+
 	GLint bufferWidth, bufferHeight;
 	void createCallbacks();
 	GLfloat lastX;
@@ -104,7 +113,6 @@ private:
 	bool mouseFirstMoved;
 	static void ManejaTeclado(GLFWwindow* window, int key, int code, int action, int mode);
 	static void ManejaMouse(GLFWwindow* window, double xPos, double yPos);
-	
+
 
 };
-
